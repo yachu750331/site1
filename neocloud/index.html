@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeoCloud 個股戰情儀表板 | 個股戰情室</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    background: #020617;
+    color: #e2e8f0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  @keyframes pulse-red {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  @keyframes glow-red {
+    0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.3), inset 0 0 10px rgba(239, 68, 68, 0.1); }
+    50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.5), inset 0 0 15px rgba(239, 68, 68, 0.2); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  body {
+    animation: fadeIn 0.5s ease;
+  }
+
+  .container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .header {
+    margin-bottom: 32px;
+  }
+
+  .header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header .subtitle {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 8px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .header .timestamp {
+    font-size: 11px;
+    color: #64748b;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 32px 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #1e293b;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .grid-full {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 1024px) {
+    .grid-2 {
+      grid-template-columns: 1fr;
+    }
+    .grid {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+  }
+
+  .card {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    border-color: #475569;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .card.risk-high {
+    animation: glow-red 2s ease-in-out infinite;
+    border-color: rgba(239, 68, 68, 0.5);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f8fafc;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .card-subtitle {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
+
+  .signal-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: 8px;
+  }
+
+  .signal-green { background: #22c55e; box-shadow: 0 0 8px rgba(34, 197, 94, 0.5); }
+  .signal-yellow { background: #eab308; box-shadow: 0 0 6px rgba(234, 179, 8, 0.5); }
+  .signal-red { background: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.7); animation: pulse-red 1.5s ease-in-out infinite; }
+  .signal-neutral { background: #6b7280; }
+
+  .badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+    background: #1e293b;
+    color: #cbd5e1;
+    margin-top: 4px;
+  }
+
+  .badge-green { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+  .badge-yellow { background: rgba(234, 179, 8, 0.1); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
+  .badge-red { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+  .price-line {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  .price {
+    font-size: 28px;
+    font-weight: 700;
+    color: #f8fafc;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: -1px;
+  }
+
+  .change {
+    font-size: 14px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .change.up { color: #22c55e; }
+  .change.down { color: #ef4444; }
+
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 13px;
+  }
+
+  .metric-label {
+    color: #94a3b8;
+  }
+
+  .metric-value {
+    color: #f8fafc;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+
+  .backlog-container {
+    margin-top: 16px;
+  }
+
+  .backlog-bar {
+    background: #0f172a;
+    border-radius: 6px;
+    height: 28px;
+    display: flex;
+    overflow: hidden;
+    margin: 8px 0;
+    position: relative;
+  }
+
+  .backlog-segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    color: #f8fafc;
+    transition: opacity 0.3s ease;
+  }
+
+  .backlog-segment:hover {
+    opacity: 0.8;
+  }
+
+  .segment-meta-meta { background: #3b82f6; }
+  .segment-msft { background: #10b981; }
+  .segment-aws { background: #f97316; }
+  .segment-google { background: #ef4444; }
+  .segment-anthropic { background: #a78bfa; }
+  .segment-fluidstack { background: #ec4899; }
+
+  .backlog-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 11px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  .capacity-bar {
+    margin: 16px 0;
+  }
+
+  .capacity-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #94a3b8;
+    margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .capacity-track {
+    background: #0f172a;
+    border-radius: 8px;
+    height: 24px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .capacity-fill-current {
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    height: 100%;
+    border-radius: 8px 0 0 8px;
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: #f8fafc;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .capacity-fill-target {
+    background: linear-gradient(90deg, rgba(34, 197, 94, 0.3), rgba(34, 197, 94, 0.1));
+    height: 100%;
+    border-right: 2px dashed #22c55e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: #22c55e;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .expandable-header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+  }
+
+  .expandable-header:hover {
+    color: #60a5fa;
+  }
+
+  .expand-icon {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+  }
+
+  .expand-icon.open {
+    transform: rotate(90deg);
+  }
+
+  .expandable-content {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #1e293b;
+  }
+
+  .financial-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .financial-table th,
+  .financial-table td {
+    padding: 10px 8px;
+    text-align: right;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  .financial-table th {
+    text-align: left;
+    color: #94a3b8;
+    font-weight: 600;
+  }
+
+  .financial-table th:first-child,
+  .financial-table td:first-child {
+    text-align: left;
+  }
+
+  .financial-table td {
+    color: #cbd5e1;
+  }
+
+  .financial-table tr:last-child th,
+  .financial-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .val-green { color: #22c55e; }
+  .val-red { color: #ef4444; }
+  .val-yellow { color: #eab308; }
+
+  .risk-alert {
+    background: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #fca5a5;
+  }
+
+  .risk-alert-high {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.4);
+  }
+
+  .risk-alert strong {
+    color: #fecaca;
+  }
+
+  .timeline {
+    margin: 12px 0;
+    padding: 12px;
+    background: rgba(51, 65, 85, 0.2);
+    border-radius: 8px;
+    border-left: 3px solid #3b82f6;
+    font-size: 12px;
+    color: #cbd5e1;
+  }
+
+  .timeline strong {
+    color: #93c5fd;
+  }
+
+  .guidance-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .guidance-item {
+    background: rgba(51, 65, 85, 0.2);
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 2px solid #06b6d4;
+    font-size: 12px;
+  }
+
+  .guidance-item strong {
+    color: #06b6d4;
+  }
+
+  .guidance-item .label {
+    color: #94a3b8;
+    font-weight: 600;
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useRef } = React;
+
+// ── Stock Data ──
+const STOCKS = [
+  {
+    ticker: "NBIS",
+    company: "Nebius Group",
+    price: 277.68,
+    change: 8.88,
+    mcap: 76.1,
+    sector: "AI 雲端平台",
+    backlog: 46.4,
+    backlogSegments: [
+      { name: "Meta", value: 27, color: "segment-meta-meta" },
+      { name: "Microsoft", value: 19.4, color: "segment-msft" },
+    ],
+    capacityMW: {
+      current: 220,
+      target: 1000,
+      contracted: 5000,
+    },
+    revenue: 1360,
+    revGrowth: 454,
+    ebitdaMargin: 41,
+    fcf: null,
+    debt: 2.5,
+    cash: 8.0,
+    netDebt: -5.5,
+    riskLevel: "LOW",
+    riskColor: "signal-green",
+    timeline: "Q2'26 財報大超預期；年底 ARR 目標 $7-9B、合約電力升至 5GW",
+  },
+  {
+    ticker: "CRWV",
+    company: "CoreWeave",
+    price: 105.26,
+    change: -0.97,
+    mcap: 58.1,
+    sector: "GPU 雲端供應商",
+    backlog: 104,
+    backlogSegments: [
+      { name: "Meta", value: 35, color: "segment-meta-meta" },
+      { name: "Anthropic", value: 15, color: "segment-anthropic" },
+      { name: "Microsoft", value: 10, color: "segment-msft" },
+    ],
+    capacityMW: null,
+    gpuText: "數十萬 GPU / 年底有效電力目標 >1.85GW",
+    revenue: 7590,
+    revGrowth: 112,
+    ebitdaMargin: 62,
+    fcf: -5270,
+    debt: 21.4,
+    cash: 4.0,
+    netDebt: 17.4,
+    riskLevel: "HIGH",
+    riskColor: "signal-red",
+    timeline: "2026 營收指引 $12.4-13.2B；訂單簿 $104B + Q3 逾 $25B 新增",
+  },
+  {
+    ticker: "IREN",
+    company: "IREN Limited",
+    price: 44.06,
+    change: -1.56,
+    mcap: 15.75,
+    sector: "AI 雲端平台",
+    backlog: 12.5,
+    backlogSegments: [
+      { name: "Microsoft", value: 9.7, color: "segment-msft" },
+      { name: "AI 開發商群", value: 2.8, color: "segment-anthropic" },
+    ],
+    capacityMW: {
+      current: 810,
+      target: 2910,
+      contracted: 2910,
+    },
+    revenue: 757,
+    revGrowth: 105,
+    ebitdaMargin: 85,
+    fcf: null,
+    debt: 4.0,
+    cash: 7.6,
+    netDebt: -3.6,
+    riskLevel: "MEDIUM",
+    riskColor: "signal-green",
+    timeline: "7/20 新簽 $2.8B、ARR 目標 >$4B（85% 已鎖定）；8/27 公布 Q2",
+  },
+  {
+    ticker: "CIFR",
+    company: "Cipher Digital",
+    price: 17.86,
+    change: 7.43,
+    mcap: 7.41,
+    sector: "HPC 資料中心",
+    backlog: 9.3,
+    backlogSegments: [
+      { name: "AWS", value: 5.5, color: "segment-aws" },
+      { name: "Fluidstack/Google", value: 3.8, color: "segment-google" },
+    ],
+    capacityMW: {
+      current: 50,
+      target: 600,
+      contracted: 900,
+    },
+    revenue: 191,
+    revGrowth: 20,
+    ebitdaMargin: null,
+    fcf: -500,
+    debt: 4.3,
+    cash: 0.6,
+    netDebt: 3.7,
+    riskLevel: "MEDIUM-HIGH",
+    riskColor: "signal-yellow",
+    timeline: "Black Pearl 提前 2 個月通電、租金入帳；新增 Apollo 900MW 選擇權",
+  },
+];
+
+// ── Components ──
+function SignalDot({ signal, size = 12 }) {
+  const classes = {
+    "green": "signal-green",
+    "yellow": "signal-yellow",
+    "red": "signal-red",
+    "neutral": "signal-neutral",
+  };
+  return <span className={`signal-dot ${classes[signal]}`} style={{ width: size, height: size }} />;
+}
+
+function StockCard({ stock }) {
+  const [expanded, setExpanded] = useState(false);
+
+  const riskBadgeClass = {
+    "LOW": "badge-green",
+    "MEDIUM": "badge-yellow",
+    "MEDIUM-HIGH": "badge-yellow",
+    "HIGH": "badge-red",
+  }[stock.riskLevel];
+
+  const changeColor = stock.change >= 0 ? "up" : "down";
+
+  return (
+    <div className={`card ${stock.riskLevel === "HIGH" ? "risk-high" : ""}`}>
+      <div className="card-header">
+        <div>
+          <div className="card-title">
+            {stock.ticker}
+            <SignalDot signal={stock.riskLevel === "HIGH" ? "red" : stock.riskLevel === "MEDIUM" || stock.riskLevel === "MEDIUM-HIGH" ? "yellow" : "green"} />
+          </div>
+          <div className="card-subtitle">{stock.company}</div>
+          <div className="badge" style={{ marginTop: 6 }}>{stock.sector}</div>
+        </div>
+      </div>
+
+      <div className="price-line">
+        <div className="price">${stock.price.toFixed(2)}</div>
+        <div className={`change ${changeColor}`}>
+          {stock.change >= 0 ? "▲" : "▼"} {Math.abs(stock.change).toFixed(2)}%
+        </div>
+      </div>
+
+      <div className="metric-row">
+        <span className="metric-label">市值</span>
+        <span className="metric-value">${stock.mcap}B</span>
+      </div>
+
+      <div className="metric-row">
+        <span className="metric-label">訂單簿</span>
+        <span className="metric-value">${stock.backlog.toFixed(1)}B</span>
+      </div>
+
+      <div className="expandable-header" onClick={() => setExpanded(!expanded)}>
+        <span className={`expand-icon ${expanded ? "open" : ""}`}>▶</span>
+        <span>展開詳情</span>
+      </div>
+
+      {expanded && (
+        <div className="expandable-content">
+          <div style={{ marginTop: 12 }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: "#94a3b8", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.5px" }}>
+              訂單簿
+            </div>
+            <div className="backlog-bar">
+              {stock.backlogSegments.map((seg, i) => (
+                <div
+                  key={i}
+                  className={`backlog-segment ${seg.color}`}
+                  style={{ width: `${(seg.value / stock.backlog) * 100}%` }}
+                  title={`${seg.name}: $${seg.value}B`}
+                >
+                  {seg.value >= 5 && <span>{seg.name}</span>}
+                </div>
+              ))}
+            </div>
+            <div className="backlog-legend">
+              {stock.backlogSegments.map((seg, i) => (
+                <div key={i} className="legend-item">
+                  <div className={`legend-dot ${seg.color}`} />
+                  <span>{seg.name}: ${seg.value}B</span>
+                </div>
+              ))}
+            </div>
+
+            {stock.capacityMW && (
+              <div className="capacity-bar">
+                <div style={{ fontSize: 11, fontWeight: 600, color: "#94a3b8", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                  資料中心容量 (MW)
+                </div>
+                <div className="capacity-label">
+                  <span>{stock.capacityMW.current}MW</span>
+                  <span>{stock.capacityMW.target}MW 目標</span>
+                  <span>{stock.capacityMW.contracted}MW 已簽約</span>
+                </div>
+                <div className="capacity-track">
+                  <div
+                    className="capacity-fill-current"
+                    style={{ width: `${(stock.capacityMW.current / stock.capacityMW.contracted) * 100}%` }}
+                  >
+                    {stock.capacityMW.current > 50 && `${stock.capacityMW.current}MW`}
+                  </div>
+                  <div
+                    className="capacity-fill-target"
+                    style={{ width: `${(stock.capacityMW.target / stock.capacityMW.contracted) * 100}%` }}
+                  />
+                </div>
+              </div>
+            )}
+
+            {stock.gpuText && (
+              <div className="timeline">
+                <strong>GPU 容量：</strong> {stock.gpuText}
+              </div>
+            )}
+
+            <div className="timeline">
+              <strong>時程：</strong> {stock.timeline}
+            </div>
+
+            <div style={{ marginTop: 12 }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: "#94a3b8", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                財務指標
+              </div>
+              <table className="financial-table">
+                <tbody>
+                  <tr>
+                    <th>近12月營收</th>
+                    <td>${stock.revenue}M</td>
+                  </tr>
+                  <tr>
+                    <th>營收年增率</th>
+                    <td className={stock.revGrowth >= 100 ? "val-green" : "val-yellow"}>{stock.revGrowth}%</td>
+                  </tr>
+                  <tr>
+                    <th>EBITDA 利潤率</th>
+                    <td>{stock.ebitdaMargin ? `${stock.ebitdaMargin}%` : "—"}</td>
+                  </tr>
+                  <tr>
+                    <th>近12月自由現金流</th>
+                    <td className={stock.fcf ? stock.fcf < 0 ? "val-red" : "val-green" : ""}>{stock.fcf ? `$${stock.fcf}M` : "—"}</td>
+                  </tr>
+                  <tr>
+                    <th>總債務</th>
+                    <td>${stock.debt.toFixed(1)}B</td>
+                  </tr>
+                  <tr>
+                    <th>現金</th>
+                    <td>${stock.cash.toFixed(1)}B</td>
+                  </tr>
+                  <tr>
+                    <th>淨債務</th>
+                    <td className={stock.netDebt < 0 ? "val-green" : "val-red"}>
+                      {stock.netDebt < 0 ? "$" : "-$"}{Math.abs(stock.netDebt).toFixed(1)}B
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function RiskDashboard() {
+  return (
+    <div className="card">
+      <div className="card-title">信用風險指標</div>
+
+      {STOCKS.map((stock, i) => (
+        <div key={i} style={{ marginTop: i === 0 ? 16 : 20, paddingTop: i > 0 ? 16 : 0, borderTop: i > 0 ? "1px solid #1e293b" : "none" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+            <div style={{ fontWeight: 600, fontSize: 13 }}>{stock.ticker} - {stock.company}</div>
+            <div className={`badge ${stock.riskLevel === "LOW" ? "badge-green" : stock.riskLevel === "HIGH" ? "badge-red" : "badge-yellow"}`}>
+              {stock.riskLevel}
+            </div>
+          </div>
+
+          {stock.riskLevel === "HIGH" && (
+            <>
+              <div className="risk-alert risk-alert-high">
+                <strong>危機：</strong>高槓桿（{stock.debt > 15 ? `${stock.debt}B 債務` : "債務升高"}），重大再融資風險
+              </div>
+              <table className="financial-table" style={{ marginTop: 8 }}>
+                <tbody>
+                  <tr>
+                    <th>債務槓桿倍數</th>
+                    <td className="val-red">{(stock.debt / stock.mcap * 100).toFixed(1)}% 債務佔市值比例</td>
+                  </tr>
+                  <tr>
+                    <th>債券殖利率風險</th>
+                    <td className="val-red">~11.5%（融資成本高）</td>
+                  </tr>
+                  <tr>
+                    <th>Q2'26 淨損 / CapEx</th>
+                    <td className="val-red">淨損 $626M；CapEx 指引 $35-39B</td>
+                  </tr>
+                </tbody>
+              </table>
+            </>
+          )}
+
+          {stock.riskLevel === "MEDIUM" && (
+            <div className="risk-alert">
+              <strong>注意：</strong>TTM 已轉盈、現金 $7.6B、客戶預付款覆蓋約 45% GPU CapEx；仍須監控大規模建設執行
+            </div>
+          )}
+
+          {stock.riskLevel === "MEDIUM-HIGH" && (
+            <div className="risk-alert">
+              <strong>注意：</strong>Black Pearl 已提前通電、租金開始入帳，惟現金僅約 $0.6B；HPC 收入剛起步，需關注資本效率
+            </div>
+          )}
+
+          {stock.riskLevel === "LOW" && (
+            <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", borderRadius: 8, padding: 12, marginTop: 8, fontSize: 12, color: "#86efac" }}>
+              <strong>優勢：</strong>淨現金 ${Math.abs(stock.netDebt).toFixed(1)}B，資產負債表穩健
+            </div>
+          )}
+        </div>
+      ))}
+
+      <div style={{ marginTop: 20, paddingTop: 16, borderTop: "1px solid #1e293b" }}>
+        <div style={{ fontSize: 12, fontWeight: 600, color: "#cbd5e1", marginBottom: 12 }}>業界廣泛風險警示：</div>
+        <div className="risk-alert">
+          <strong>▼ GPU 擔保品</strong>租賃價格年跌50-70%。槓桿擔保品萎縮。再融資更困難。
+        </div>
+        <div className="risk-alert" style={{ marginTop: 8 }}>
+          <strong>▼ 現金流</strong>多數 NeoCloud 供應商自由現金流為負。依賴高成本融資籌資。
+        </div>
+        <div className="risk-alert" style={{ marginTop: 8 }}>
+          <strong>⚠ 客戶集中度</strong>1-3 個超大型雲端客戶 = 合約重新定價或失單風險。
+        </div>
+        <div className="risk-alert" style={{ marginTop: 8 }}>
+          <strong>⚠ 利率敏感度</strong>若聯準會加息，再融資成本暴漲。目前11.5%債券殖利率反映市場壓力。
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ForwardOutlook() {
+  return (
+    <div className="card">
+      <div className="card-title">2026 營收指引與展望</div>
+
+      {STOCKS.map((stock, i) => (
+        <div key={i} style={{ marginTop: i === 0 ? 16 : 16, paddingTop: i > 0 ? 16 : 0, borderTop: i > 0 ? "1px solid #1e293b" : "none" }}>
+          <div style={{ fontWeight: 600, fontSize: 13, marginBottom: 10 }}>{stock.ticker}</div>
+
+          {stock.ticker === "NBIS" && (
+            <div className="guidance-grid">
+              <div className="guidance-item">
+                <div className="label">2026E 營收</div>
+                <div><strong>$3.0–3.4B</strong></div>
+              </div>
+              <div className="guidance-item">
+                <div className="label">年底 ARR 目標 / CapEx</div>
+                <div><strong>ARR $7–9B</strong>｜CapEx $20–25B</div>
+              </div>
+            </div>
+          )}
+
+          {stock.ticker === "CRWV" && (
+            <div className="guidance-grid">
+              <div className="guidance-item">
+                <div className="label">2026E 營收</div>
+                <div><strong>$12.4–13.2B</strong></div>
+              </div>
+              <div className="guidance-item">
+                <div className="label">關鍵催化劑</div>
+                <div><strong>訂單簿 $104B｜電力 >1.85GW</strong></div>
+              </div>
+            </div>
+          )}
+
+          {stock.ticker === "IREN" && (
+            <div className="guidance-grid">
+              <div className="guidance-item">
+                <div className="label">ARR 目標</div>
+                <div><strong>&gt;$4B</strong>（85% 已鎖定）</div>
+              </div>
+              <div className="guidance-item">
+                <div className="label">GPU 規模</div>
+                <div><strong>23K → 140K+</strong> GPUs</div>
+              </div>
+            </div>
+          )}
+
+          {stock.ticker === "CIFR" && (
+            <div className="guidance-grid">
+              <div className="guidance-item">
+                <div className="label">開發管線</div>
+                <div><strong>$11.4B</strong></div>
+              </div>
+              <div className="guidance-item">
+                <div className="label">關鍵里程碑</div>
+                <div><strong>Black Pearl 提前通電</strong>（8月）</div>
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── Main Dashboard ──
+function Dashboard() {
+  return (
+    <div className="container">
+      <div className="header">
+        <h1>NeoCloud 個股戰情儀表板</h1>
+        <div className="subtitle">AI 基礎設施個股戰情室</div>
+        <div className="timestamp">數據截至 2026-08-14 收盤</div>
+      </div>
+
+      {/* Section 1: Stock Overview */}
+      <div className="section-title">個股總覽</div>
+      <div className="grid">
+        {STOCKS.map((stock, i) => (
+          <StockCard key={i} stock={stock} />
+        ))}
+      </div>
+
+      {/* Section 2: Backlog (in cards above) - shown in expanded details */}
+
+      {/* Section 3: Financial Health */}
+      <div className="section-title">財務健康與槓桿</div>
+      <div className="card">
+        <table className="financial-table">
+          <thead>
+            <tr>
+              <th>指標</th>
+              <th>NBIS</th>
+              <th>CRWV</th>
+              <th>IREN</th>
+              <th>CIFR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>近12月營收 ($M)</th>
+              <td>1,360</td>
+              <td>7,590</td>
+              <td>757</td>
+              <td>191</td>
+            </tr>
+            <tr>
+              <th>營收年增率</th>
+              <td className="val-green">454%</td>
+              <td className="val-green">112%</td>
+              <td className="val-green">105%</td>
+              <td className="val-yellow">20%</td>
+            </tr>
+            <tr>
+              <th>EBITDA 利潤率</th>
+              <td>41%</td>
+              <td>62%</td>
+              <td>85%</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <th>自由現金流 ($M)</th>
+              <td className="val-red">—</td>
+              <td className="val-red">-5,270</td>
+              <td className="val-yellow">—</td>
+              <td className="val-red">-500</td>
+            </tr>
+            <tr>
+              <th>總債務 ($B)</th>
+              <td className="val-green">2.5</td>
+              <td className="val-red">21.4</td>
+              <td className="val-yellow">4.0</td>
+              <td className="val-yellow">4.3</td>
+            </tr>
+            <tr>
+              <th>現金 ($B)</th>
+              <td>8.0</td>
+              <td>4.0</td>
+              <td>7.6</td>
+              <td>0.6</td>
+            </tr>
+            <tr>
+              <th>淨債務 ($B)</th>
+              <td className="val-green">-5.5（現金）</td>
+              <td className="val-red">17.4</td>
+              <td className="val-green">-3.6（現金）</td>
+              <td className="val-red">3.7</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Section 4: Capacity Tracker (shown in expanded card details) */}
+
+      {/* Section 5: Credit Risk */}
+      <div className="section-title">信用風險儀表板</div>
+      <RiskDashboard />
+
+      {/* Section 6: Forward Outlook */}
+      <div className="section-title">2026 營收展望與前瞻</div>
+      <ForwardOutlook />
+
+      {/* Footer */}
+      <div style={{ marginTop: 48, paddingTop: 24, borderTop: "1px solid #1e293b", fontSize: 11, color: "#64748b", textAlign: "center", fontFamily: "'JetBrains Mono', monospace" }}>
+        <p>NeoCloud 股票智能 | 截至 2026 年 8 月 14 日的實時市場條件</p>
+        <p style={{ marginTop: 8 }}>風險指標反映業界動態：GPU 供過於求、自由現金流燒錄、槓桿壓力。監控再融資時間窗口。</p>
+      </div>
+    </div>
+  );
+}
+
+// ── Render ──
+ReactDOM.render(<Dashboard />, document.getElementById("root"));
+</script>
+</body>
+</html>

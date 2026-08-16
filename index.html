@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大叔美股筆記 · 整合戰情站</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --bg:#070b16; --bg2:#0d1424; --bar:#0b1120; --border:#1c2740;
+    --text:#e6edf7; --muted:#7c8aa5; --dim:#4a5670;
+    --blue:#3b82f6; --purple:#a855f7; --cyan:#38bdf8;
+    --sans:'Noto Sans TC',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  html,body{height:100%;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);display:flex;flex-direction:column;overflow:hidden;}
+
+  /* ── Top bar ── */
+  .topbar{display:flex;align-items:center;gap:22px;height:54px;padding:0 20px;background:var(--bar);border-bottom:1px solid var(--border);flex-shrink:0;position:relative;z-index:20;}
+  .logo{font-weight:700;font-size:17px;letter-spacing:.5px;white-space:nowrap;
+    background:linear-gradient(90deg,#c084fc,#60a5fa 60%,#38bdf8);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .tabs{display:flex;gap:4px;height:100%;}
+  .tab{position:relative;display:flex;align-items:center;gap:7px;padding:0 18px;height:100%;border:none;background:none;
+    color:var(--muted);font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:color .2s;}
+  .tab:hover{color:var(--text);}
+  .tab.active{color:#fff;}
+  .tab.active::after{content:'';position:absolute;left:14px;right:14px;bottom:0;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--purple),var(--blue));}
+  .tab .ic{font-size:14px;}
+  .spacer{flex:1;}
+  .stamp{font-family:var(--mono);font-size:11px;color:var(--dim);white-space:nowrap;}
+
+  /* ── Sub nav (industry chips) ── */
+  .subnav{display:none;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 20px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;position:relative;z-index:15;}
+  .subnav.show{display:flex;}
+  .subnav .lbl{font-size:12px;color:var(--dim);font-family:var(--mono);margin-right:2px;}
+  .chip{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:#0f1830;color:var(--muted);
+    font-size:13px;font-weight:500;cursor:pointer;transition:all .18s;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+  .chip:hover{color:var(--text);border-color:#2f3f63;}
+  .chip.active{background:linear-gradient(135deg,rgba(168,85,247,.25),rgba(59,130,246,.25));border-color:var(--blue);color:#fff;}
+  .chip .soon{font-size:9px;color:var(--dim);border:1px solid var(--border);border-radius:4px;padding:0 4px;line-height:1.5;}
+  .chip.active .soon{color:#cbd5e1;}
+
+  /* ── Content ── */
+  .stage{flex:1;position:relative;background:var(--bg);}
+  .panel{position:absolute;inset:0;display:none;}
+  .panel.show{display:block;}
+  iframe{width:100%;height:100%;border:0;background:var(--bg);display:block;}
+
+  /* ── Placeholder ── */
+  .ph{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:24px;}
+  .ph .ico{width:66px;height:66px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:30px;
+    background:linear-gradient(135deg,rgba(168,85,247,.18),rgba(59,130,246,.12));border:1px solid var(--border);}
+  .ph h2{font-size:20px;font-weight:700;}
+  .ph p{color:var(--muted);font-size:14px;max-width:440px;line-height:1.7;}
+  .ph .badge{font-family:var(--mono);font-size:12px;color:var(--purple);border:1px solid rgba(168,85,247,.4);
+    background:rgba(168,85,247,.08);border-radius:20px;padding:4px 14px;letter-spacing:1px;}
+  .ph small{color:var(--dim);font-size:12px;font-family:var(--mono);}
+
+  @media(max-width:680px){
+    .stamp{display:none;} .logo{font-size:14px;}
+    .topbar{gap:8px;padding:0 10px;}
+    .tabs{overflow-x:auto;scrollbar-width:none;}
+    .tabs::-webkit-scrollbar{display:none;}
+    .tab{padding:0 11px;font-size:13px;}
+    .subnav{padding:8px 10px;gap:6px;}
+    .chip{font-size:12px;padding:4px 10px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">◆ 大叔美股筆記</div>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-tab="market"><span class="ic">📈</span>市場焦點</button>
+    <button class="tab" data-tab="industry"><span class="ic">🗺️</span>產業地圖</button>
+    <button class="tab" data-tab="kol"><span class="ic">📡</span>KOL 動態</button>
+  </div>
+  <div class="spacer"></div>
+  <div class="stamp" id="stamp">整合戰情站</div>
+</div>
+
+<!-- 產業地圖 sub-nav -->
+<div class="subnav" id="subnav">
+  <span class="lbl">產業分類</span>
+</div>
+
+<div class="stage">
+  <!-- 市場焦點 -->
+  <div class="panel show" id="panel-market">
+    <iframe data-src="market/index.html" title="市場焦點"></iframe>
+  </div>
+
+  <!-- 產業地圖 -->
+  <div class="panel" id="panel-industry">
+    <iframe id="industry-frame" title="產業地圖"></iframe>
+    <div class="ph" id="industry-ph" style="display:none;">
+      <div class="ico">🚧</div>
+      <div class="badge">建置中 · COMING SOON</div>
+      <h2 id="ph-name">建置中</h2>
+      <p id="ph-desc">此產業分類的戰情頁面尚未建立，之後補上內容後會出現在這裡。</p>
+    </div>
+  </div>
+
+  <!-- KOL 動態 -->
+  <div class="panel" id="panel-kol">
+    <div class="ph">
+      <div class="ico">📡</div>
+      <div class="badge">建置中 · COMING SOON</div>
+      <h2>KOL 動態</h2>
+      <p>彙整財經 KOL／社群的即時動態與重點觀點。資料來源與版位確定後即可上線。</p>
+      <small>規劃中：X / Threads / YouTube 追蹤清單彙整</small>
+    </div>
+  </div>
+</div>
+
+<script>
+const CATS = [
+  { id:'memory',    name:'儲存記憶體', src:null,                         icon:'💾' },
+  { id:'optical',   name:'光通訊',     src:null,  icon:'🔺' },
+  { id:'packaging', name:'先進封裝',   src:null,                         icon:'🔩' },
+  { id:'equipment', name:'設備',       src:null,                         icon:'⚙️' },
+  { id:'neocloud',  name:'NeoCloud',   src:'neocloud/index.html',     icon:'☁️' },
+  { id:'thermal',   name:'散熱電力',   src:null,                         icon:'🌡️' },
+  { id:'uas',       name:'UAS',        src:'uas/index.html',          icon:'🛩️' },
+  { id:'security',  name:'資安',       src:null,                         icon:'🛡️' },
+  { id:'energy',    name:'能源',       src:null,                         icon:'⚡' },
+];
+
+// build industry chips
+const subnav = document.getElementById('subnav');
+CATS.forEach((c,i)=>{
+  const b=document.createElement('button');
+  b.className='chip'+(c.src?'':' locked');
+  b.dataset.cat=c.id;
+  b.innerHTML = c.icon+' '+c.name + (c.src?'':' <span class="soon">建置中</span>');
+  b.addEventListener('click',()=>selectCat(c.id));
+  subnav.appendChild(b);
+});
+
+const iframes = document.querySelectorAll('iframe[data-src]');
+function lazyLoad(fr){ if(fr && fr.dataset.src && !fr.src){ fr.src = fr.dataset.src; } }
+
+// top tabs
+const tabs=[...document.querySelectorAll('.tab')];
+function showTab(id){
+  tabs.forEach(t=>t.classList.toggle('active',t.dataset.tab===id));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById('panel-'+id).classList.add('show');
+  document.getElementById('subnav').classList.toggle('show', id==='industry');
+  if(id==='market') lazyLoad(document.querySelector('#panel-market iframe'));
+  if(id==='industry' && !window.__catInit){ selectCat('optical'); window.__catInit=true; }
+}
+tabs.forEach(t=>t.addEventListener('click',()=>showTab(t.dataset.tab)));
+
+// industry category select
+const iframe=document.getElementById('industry-frame');
+const ph=document.getElementById('industry-ph');
+function selectCat(id){
+  const c=CATS.find(x=>x.id===id);
+  document.querySelectorAll('#subnav .chip').forEach(ch=>ch.classList.toggle('active',ch.dataset.cat===id));
+  if(c.src){
+    iframe.style.display='block'; ph.style.display='none';
+    if(iframe.getAttribute('data-cur')!==id){ iframe.src=c.src; iframe.setAttribute('data-cur',id); }
+  }else{
+    iframe.style.display='none'; ph.style.display='flex';
+    document.getElementById('ph-name').textContent=c.icon+' '+c.name;
+    document.getElementById('ph-desc').textContent='「'+c.name+'」的產業戰情頁面尚未建立，之後補上內容後會出現在這裡。';
+  }
+}
+
+// init
+lazyLoad(document.querySelector('#panel-market iframe'));
+</script>
+</body>
+</html>

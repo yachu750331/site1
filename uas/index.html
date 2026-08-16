@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國防無人機完整生態系 — 互動式企業關係圖</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg0:#060a14;--bg1:#0b1120;--bg2:#111827;--bg3:#1a2236;--bg4:#0f1629;--bdr:#1e2d4a;--bdr2:#2a3f6a;--t1:#e8ecf4;--t2:#8b98b5;--t3:#5a6884;--red:#ef4444;--org:#f97316;--yel:#eab308;--grn:#22c55e;--cyn:#06b6d4;--blu:#3b82f6;--pur:#a855f7;--pnk:#ec4899;--lim:#84cc16}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg0);color:var(--t1);line-height:1.6}
+.W{max-width:1200px;margin:0 auto;padding:20px 16px 60px}
+.topnav{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;position:sticky;top:0;z-index:99;background:rgba(6,10,20,.92);backdrop-filter:blur(8px);padding:10px 0;border-bottom:1px solid var(--bdr)}
+.topnav a{font-size:11px;font-weight:600;color:var(--t2);padding:5px 12px;border-radius:16px;background:var(--bg2);border:1px solid var(--bdr);text-decoration:none;transition:.2s}
+.topnav a:hover{color:#fff;background:var(--blu);border-color:var(--blu)}
+.hdr{text-align:center;padding:28px 0 10px}
+.hdr h1{font-size:21px;font-weight:900;background:linear-gradient(135deg,var(--cyn),var(--blu),var(--pur));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hdr .sub{color:var(--t2);font-size:12px;margin-top:4px}
+.ub{display:inline-block;background:linear-gradient(135deg,var(--grn),#16a34a);color:#fff;font-size:10px;font-weight:600;padding:3px 10px;border-radius:10px;margin-top:8px}
+.CH{background:linear-gradient(135deg,#1e293b,#1a2236);border:1px solid var(--bdr2);border-radius:12px;padding:18px 24px;text-align:center;margin:0 auto 18px;max-width:820px}
+.CH h2{font-size:18px;font-weight:900;letter-spacing:2px;color:#fff}
+.CH .m{color:var(--t2);font-size:11px;margin-top:3px;font-family:'JetBrains Mono',monospace}
+.tgs{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:10px}
+.T{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:500;padding:2px 8px;border-radius:14px;white-space:nowrap}
+.Tr{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)}.To{background:rgba(249,115,22,.1);color:var(--org);border:1px solid rgba(249,115,22,.2)}.Tg{background:rgba(34,197,94,.1);color:var(--grn);border:1px solid rgba(34,197,94,.2)}.Tb{background:rgba(59,130,246,.1);color:var(--blu);border:1px solid rgba(59,130,246,.2)}.Tp{background:rgba(168,85,247,.1);color:var(--pur);border:1px solid rgba(168,85,247,.2)}.Tc{background:rgba(6,182,212,.1);color:var(--cyn);border:1px solid rgba(6,182,212,.2)}.Ty{background:rgba(234,179,8,.1);color:var(--yel);border:1px solid rgba(234,179,8,.2)}.Tk{background:rgba(236,72,153,.1);color:var(--pnk);border:1px solid rgba(236,72,153,.2)}
+.S{background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;margin-bottom:16px;overflow:hidden}
+.SH{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--bdr)}
+.SH h3{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
+.SH .d{font-size:10px;color:var(--t3);font-family:'JetBrains Mono',monospace}
+.SB{padding:12px 16px}
+.IC{background:var(--bg4);border:1px solid var(--bdr);border-radius:9px;padding:12px 14px;margin-bottom:8px;position:relative}
+.IC:last-child{margin-bottom:0}
+.IC-t{font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px;margin-bottom:5px}
+.IC-d{font-size:10.5px;color:var(--t2);line-height:1.7;margin-bottom:8px}
+.KR{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.K{background:var(--bg3);border:1px solid var(--bdr);border-radius:7px;padding:5px 10px;min-width:80px}
+.K .v{font-size:13px;font-weight:900;font-family:'JetBrains Mono',monospace}
+.K .l{font-size:8px;color:var(--t3);margin-top:1px}
+.K.r .v{color:var(--red)}.K.o .v{color:var(--org)}.K.g .v{color:var(--grn)}.K.b .v{color:var(--blu)}.K.c .v{color:var(--cyn)}.K.p .v{color:var(--pur)}.K.y .v{color:var(--yel)}
+.BG{position:absolute;top:8px;right:10px;font-size:8px;padding:2px 7px;border-radius:7px;font-weight:600}
+.BG-n{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25)}
+.BG-d{background:rgba(34,197,94,.1);color:var(--grn);border:1px solid rgba(34,197,94,.2)}
+.BG-p{background:rgba(234,179,8,.1);color:var(--yel);border:1px solid rgba(234,179,8,.2)}
+.src{font-size:8px;color:var(--t3);margin-top:5px}
+.hl-r{border-left:3px solid var(--red)}.hl-o{border-left:3px solid var(--org)}.hl-g{border-left:3px solid var(--grn)}.hl-b{border-left:3px solid var(--blu)}.hl-p{border-left:3px solid var(--pur)}.hl-c{border-left:3px solid var(--cyn)}.hl-y{border-left:3px solid var(--yel)}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.g6{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+@media(max-width:900px){.g4,.g6{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.g4,.g3,.g2,.g6{grid-template-columns:1fr}}
+.scr{display:flex;gap:8px;overflow-x:auto;padding-bottom:5px;scrollbar-width:thin;scrollbar-color:var(--bdr2) transparent}
+.scr::-webkit-scrollbar{height:3px}.scr::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:3px}
+.scr>*{flex:0 0 200px}
+.CC{background:var(--bg4);border:1px solid var(--bdr);border-radius:9px;padding:10px 12px}
+.CC .cn{font-size:11px;font-weight:700;margin-bottom:2px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.CC .cd{font-size:10px;color:var(--t2);line-height:1.5}
+.CC .ct{font-size:8px;color:var(--t3);margin-top:4px}
+.ppl{display:flex;flex-wrap:wrap;gap:8px;padding:8px 0}
+.pc{display:flex;align-items:center;gap:7px;background:var(--bg4);border:1px solid var(--bdr);border-radius:9px;padding:7px 10px;flex:1;min-width:170px}
+.pa{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.pn{font-size:10px;font-weight:700}.pr{font-size:8px;color:var(--t3)}
+.DV{height:36px;display:flex;align-items:center;justify-content:center;margin:24px 0 6px}
+.DV span{font-size:16px;font-weight:900;letter-spacing:2px;padding:5px 18px;border-radius:9px;border:2px solid var(--bdr2)}
+.ftr{text-align:center;padding:18px 0;border-top:1px solid var(--bdr);margin-top:14px}
+.ftr .cr{font-size:8px;color:var(--t3)}
+/* 近期合約收購小卡 */
+.NEW{background:linear-gradient(135deg,#0f1a2e,#111827);border:1px solid var(--bdr2);border-radius:12px;padding:14px 14px 10px;margin-bottom:16px}
+.NEW>h3{font-size:14px;font-weight:900;display:flex;align-items:center;gap:6px;margin-bottom:4px;background:linear-gradient(90deg,var(--cyn),var(--blu));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.NEW>.sh{font-size:10px;color:var(--t3);margin-bottom:10px}
+.NGRD{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:900px){.NGRD{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.NGRD{grid-template-columns:1fr}}
+details.NC{background:var(--bg4);border:1px solid var(--bdr);border-radius:9px;padding:0;overflow:hidden;transition:.2s}
+details.NC:hover{border-color:var(--bdr2)}
+details.NC[open]{border-color:var(--cyn);box-shadow:0 0 0 1px rgba(6,182,212,.2)}
+details.NC>summary{list-style:none;cursor:pointer;padding:9px 11px;position:relative}
+details.NC>summary::-webkit-details-marker{display:none}
+details.NC>summary::after{content:"▸";position:absolute;top:9px;right:10px;font-size:9px;color:var(--t3);transition:.2s}
+details.NC[open]>summary::after{transform:rotate(90deg);color:var(--cyn)}
+.NC .tkr{display:inline-block;font-size:9px;font-weight:800;padding:1px 6px;border-radius:5px;font-family:'JetBrains Mono',monospace;margin-bottom:3px}
+.NC .ntt{font-size:10.5px;font-weight:700;color:var(--t1);line-height:1.35;padding-right:14px}
+.NC .amt{font-size:12px;font-weight:900;font-family:'JetBrains Mono',monospace;margin-top:4px}
+.NC .dt{font-size:8px;color:var(--t3);font-family:'JetBrains Mono',monospace;margin-top:3px}
+.NC .exp{padding:8px 11px 10px;border-top:1px dashed var(--bdr);font-size:10px;color:var(--t2);line-height:1.6}
+.NC .tag{display:inline-block;font-size:7.5px;font-weight:600;padding:1px 5px;border-radius:4px;margin-right:3px}
+.tk-r{background:rgba(239,68,68,.15);color:var(--red)}.tk-o{background:rgba(249,115,22,.15);color:var(--org)}.tk-g{background:rgba(34,197,94,.15);color:var(--grn)}.tk-b{background:rgba(59,130,246,.15);color:var(--blu)}.tk-p{background:rgba(168,85,247,.15);color:var(--pur)}.tk-c{background:rgba(6,182,212,.15);color:var(--cyn)}.tk-y{background:rgba(234,179,8,.15);color:var(--yel)}.tk-k{background:rgba(236,72,153,.15);color:var(--pnk)}
+.amt-r{color:var(--red)}.amt-o{color:var(--org)}.amt-g{color:var(--grn)}.amt-b{color:var(--blu)}.amt-p{color:var(--pur)}.amt-c{color:var(--cyn)}.amt-y{color:var(--yel)}.amt-k{color:var(--pnk)}
+.NBADG{display:inline-block;font-size:8px;font-weight:700;padding:1px 6px;border-radius:5px;margin-left:4px;background:rgba(34,197,94,.2);color:var(--grn);border:1px solid rgba(34,197,94,.35)}
+.NBADG.acq{background:rgba(168,85,247,.2);color:var(--pur);border-color:rgba(168,85,247,.35)}
+.NBADG.pgm{background:rgba(6,182,212,.2);color:var(--cyn);border-color:rgba(6,182,212,.35)}
+.NBADG.noa{background:rgba(59,130,246,.2);color:var(--blu);border-color:rgba(59,130,246,.35)}
+.NBADG.law{background:rgba(234,179,8,.2);color:var(--yel);border-color:rgba(234,179,8,.35)}
+details.NC.pgm{border-color:rgba(6,182,212,.4);background:linear-gradient(135deg,#0a1929,var(--bg4))}
+details.NC.noa{border-color:rgba(59,130,246,.4);background:linear-gradient(135deg,#0a1929,var(--bg4))}
+details.NC.law{border-color:rgba(234,179,8,.4);background:linear-gradient(135deg,#1a1a0a,var(--bg4))}
+.PGH{grid-column:1/-1;background:linear-gradient(135deg,rgba(6,182,212,.08),rgba(59,130,246,.05));border:1px dashed var(--bdr2);border-radius:9px;padding:8px 12px;margin-bottom:8px;font-size:10px;font-weight:700;color:var(--cyn);display:flex;align-items:center;gap:6px}
+/* 篩選列 */
+.FLT{background:var(--bg4);border:1px solid var(--bdr);border-radius:9px;padding:8px 10px;margin-bottom:10px}
+.FLT-row{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.FLT-row+.FLT-row{margin-top:6px;padding-top:6px;border-top:1px dashed var(--bdr)}
+.FLT-lbl{font-size:9px;color:var(--t3);font-weight:700;margin-right:4px;letter-spacing:.5px}
+.chip{display:inline-flex;align-items:center;gap:3px;font-size:9.5px;font-weight:600;padding:3px 9px;border-radius:12px;background:var(--bg2);border:1px solid var(--bdr);color:var(--t2);cursor:pointer;transition:.15s;user-select:none;font-family:inherit}
+.chip:hover{color:#fff;border-color:var(--bdr2);background:var(--bg3)}
+.chip.on{background:var(--blu);color:#fff;border-color:var(--blu);box-shadow:0 0 0 1px rgba(59,130,246,.3)}
+.chip .ct{font-size:8px;opacity:.7;font-family:'JetBrains Mono',monospace;margin-left:2px}
+.FLT-cnt{margin-left:auto;font-size:9px;color:var(--t3);font-family:'JetBrains Mono',monospace}
+</style>
+</head>
+<body>
+<div class="W">
+
+<div class="hdr">
+  <div style="font-size:26px">🛩️</div>
+  <h1>國防無人機完整生態系 — 互動式企業關係圖</h1>
+  <div class="sub">RCAT · ONDS · UMAC · LPTH · KOPN · LASR · KTOS · AVAV ｜無人機 · 定向能 · 光學 · 顯示器 · 巡飛彈</div>
+  <div class="ub">📅 更新至 2026年8月14日</div>
+</div>
+
+<div class="topnav">
+  <a href="#new" style="background:linear-gradient(135deg,var(--cyn),var(--blu));color:#fff;border-color:var(--cyn)">🆕 近期合約</a>
+  <a href="#rcat">🦅 RCAT</a>
+  <a href="#onds">🏢 ONDS</a>
+  <a href="#umac">🔧 UMAC</a>
+  <a href="#lpth">🔭 LPTH</a>
+  <a href="#kopn">🖥️ KOPN</a>
+  <a href="#lasr">⚡ LASR</a>
+  <a href="#ktos">🚀 KTOS</a>
+  <a href="#avav">🎯 AVAV</a>
+  <a href="#eco">🔗 關係圖</a>
+</div>
+
+<!-- ╔════════════════════════════════════════════╗ -->
+<!-- ║      近期重大合約與收購（4月至今）           ║ -->
+<!-- ╚════════════════════════════════════════════╝ -->
+<div class="NEW" id="new">
+  <h3>🆕 近期重大合約與收購</h3>
+  <div class="sh">📅 2026年5-8月 · 各公司官網公告 · 點擊小卡展開詳情</div>
+
+  <!-- 篩選列 -->
+  <div class="FLT">
+    <div class="FLT-row">
+      <span class="FLT-lbl">🏢 公司</span>
+      <button class="chip on" data-fco="all">全部</button>
+      <button class="chip" data-fco="RCAT">🦅 RCAT</button>
+      <button class="chip" data-fco="ONDS">🏢 ONDS</button>
+      <button class="chip" data-fco="UMAC">🔧 UMAC</button>
+      <button class="chip" data-fco="LPTH">🔭 LPTH</button>
+      <button class="chip" data-fco="KOPN">🖥️ KOPN</button>
+      <button class="chip" data-fco="LASR">⚡ LASR</button>
+      <button class="chip" data-fco="KTOS">🚀 KTOS</button>
+      <button class="chip" data-fco="AVAV">🎯 AVAV</button>
+      <span style="width:1px;height:14px;background:var(--bdr);margin:0 4px"></span>
+      <button class="chip" data-fco="PROG">🎯 政府計畫</button>
+      <button class="chip" data-fco="LAW">📜 立法/NDAA</button>
+      <button class="chip" data-fco="NOAA">🌀 NOAA</button>
+      <span class="FLT-cnt" id="fltCnt"></span>
+    </div>
+    <div class="FLT-row">
+      <span class="FLT-lbl">🏷️ 類型</span>
+      <button class="chip on" data-ftp="all">全部</button>
+      <button class="chip" data-ftp="合約">💼 合約</button>
+      <button class="chip" data-ftp="收購">🤝 收購</button>
+      <button class="chip" data-ftp="計畫">🎯 計畫</button>
+      <button class="chip" data-ftp="合作">🤝 合作</button>
+      <button class="chip" data-ftp="立法">📜 立法</button>
+      <button class="chip" data-ftp="處分">📉 處分</button>
+    </div>
+  </div>
+
+  <div class="NGRD">
+
+    <!-- ═══ 政府計畫 Header ═══ -->
+    <div class="PGH">🎯 政府/軍種計畫追蹤 — Drone Dominance · Army UAS Marketplace · NOAA</div>
+
+    <!-- Drone Dominance Program Overview -->
+    <details class="NC pgm">
+      <summary>
+        <span class="tkr tk-c">DoW</span><span class="NBADG pgm">計畫</span>
+        <div class="ntt">Drone Dominance 計畫 — 200,000架/$1.1B</div>
+        <div class="amt amt-c">$1.1B / 2年</div>
+        <div class="dt">2026/02起 · OSW</div>
+      </summary>
+      <div class="exp">戰爭部 (DoW) 加速部署低成本單向攻擊無人機的採購計畫。2年投資 $1B+，採購 20萬+ 架。分 4 階段：Phase 1 Gauntlet (2/17-18 Fort Benning) 25家；Phase 2 Qualifier 49家。首批 $150M 原型交付令已下。3 月交付 17 個軍事單位。<span class="tag tk-c">DoW</span><span class="tag tk-r">單向攻擊</span></div>
+    </details>
+
+    <!-- Drone Dominance Phase 1 - KTOS / Teal -->
+    <details class="NC pgm">
+      <summary>
+        <span class="tkr tk-y">KTOS</span><span class="tkr tk-r" style="margin-left:2px">Teal</span><span class="NBADG pgm">計畫</span>
+        <div class="ntt">Drone Dominance Phase 1 Gauntlet 入選</div>
+        <div class="amt amt-c">入選 25家</div>
+        <div class="dt">2026/02 · OSW</div>
+      </summary>
+      <div class="exp">Kratos SRE 與 Teal Drones (RCAT 子公司) 入選 Phase 1 Gauntlet。25 家廠商競逐，含 Anduril, ModalAI, Neros, Firestorm Labs 等。Gauntlet 於 Fort Benning 進行實測。<span class="tag tk-y">KTOS</span><span class="tag tk-r">RCAT/Teal</span></div>
+    </details>
+
+    <!-- Drone Dominance Phase 2 - AVAV + KTOS -->
+    <details class="NC pgm">
+      <summary>
+        <span class="tkr tk-k">AVAV</span><span class="tkr tk-y" style="margin-left:2px">KTOS</span><span class="NBADG pgm">計畫</span>
+        <div class="ntt">Drone Dominance Phase 2 Qualifier 入選</div>
+        <div class="amt amt-c">入選 49家</div>
+        <div class="dt">2026 · OSW</div>
+      </summary>
+      <div class="exp">AeroVironment 與 Kratos 皆入選 Phase 2 Qualifier。49 家競爭，涵蓋 4 階段共 2 年時程。晉級依上一階段表現決定，進入後續量產訂單機會大。<span class="tag tk-k">AVAV</span><span class="tag tk-y">KTOS</span></div>
+    </details>
+
+    <!-- Army LRR / LUS Program -->
+    <details class="NC pgm">
+      <summary>
+        <span class="tkr tk-k">AVAV</span><span class="NBADG pgm">計畫</span>
+        <div class="ntt">陸軍長程偵察 (LRR) 計畫 — P550 主力</div>
+        <div class="amt amt-k">$990M IDIQ</div>
+        <div class="dt">2026/03/20 決標 · Army UAS PO</div>
+      </summary>
+      <div class="exp">陸軍航空 UAS PO 於 2026/03/20 透過 UAS Marketplace 之 BOA/C4S 競標，決標 AV P550。7/20 追加 82 架 $117.3M 全速率量產令。原 $990M LUS IDIQ 上限。P550 具 5hr 續航、VTOL、AI 目標識別、GPS 拒止操作，戰場情資直達營級。<span class="tag tk-k">LRR/LUS</span><span class="tag tk-r">量產</span></div>
+    </details>
+
+    <!-- Army SRR Program -->
+    <details class="NC pgm">
+      <summary>
+        <span class="tkr tk-r">RCAT</span><span class="NBADG pgm">計畫</span>
+        <div class="ntt">陸軍短程偵察 (SRR) — Black Widow 主力</div>
+        <div class="amt amt-r">5,880 架 · 5年</div>
+        <div class="dt">2024/11 決標 · Army</div>
+      </summary>
+      <div class="exp">Red Cat 於 2024/11 贏得陸軍 SRR (Short Range Reconnaissance) Program of Record，Black Widow 為排級 ISR 主力 sUAS。陸軍目標 5 年採購 5,880 系統。目前於烏克蘭多戰場實測，並已整合 Anduril Lattice、Palantir VNav。<span class="tag tk-r">SRR PoR</span><span class="tag tk-p">排級 ISR</span></div>
+    </details>
+
+    <!-- ═══ NDAA 法案追蹤 ═══ -->
+    <div class="PGH" style="color:var(--yel);background:linear-gradient(135deg,rgba(234,179,8,.08),rgba(249,115,22,.05))">📜 NDAA / 立法追蹤 — FY2026 已通過 · FY2027 委員會審議中</div>
+
+    <!-- FY2027 NDAA Status -->
+    <details class="NC law">
+      <summary>
+        <span class="tkr tk-y">FY27</span><span class="NBADG law">立法</span>
+        <div class="ntt">FY2027 NDAA 委員會通過 — 國防 $1.15T · 無人機 $74B</div>
+        <div class="amt amt-y">$1.15T / $74B</div>
+        <div class="dt">2026/06/15 · SASC S.4784</div>
+      </summary>
+      <div class="exp">參議院 SASC 於 2026/6/10 以 18-9 通過 FY2027 NDAA (S.4784)，6/15 提交參院。眾議院 HASC 同步推進。授權國防總額 ~$1.15T，其中 DoW 無人機/反無人機預算 &gt;$74B（是 FY26 的 3 倍）。參院允許（但不強制）設立「美國機器人與自主系統司令部」(USRASC) — 首個以特定技術為核心的作戰司令部。<span class="tag tk-y">FY2027</span><span class="tag tk-r">3x預算</span></div>
+    </details>
+
+    <!-- FY2026 NDAA C-UAS Restructuring -->
+    <details class="NC law">
+      <summary>
+        <span class="tkr tk-y">FY26</span><span class="NBADG law">立法</span>
+        <div class="ntt">FY2026 NDAA 反無人機重組 — Sec 912/3111/Title 86</div>
+        <div class="amt amt-y">已生效</div>
+        <div class="dt">2025/12 通過</div>
+      </summary>
+      <div class="exp">FY2026 NDAA 為 DoD 原始授權以來最大反無人機重組：Section 912 成立跨軍種反無人機專責特別工作組；Section 3111 授權能源部 (DOE) 掌管核安全反無人機；Title LXXXVI 擴大 DHS/DOJ 國內反無人機工具。整合全政府 C-UAS 職權。<span class="tag tk-r">C-UAS</span><span class="tag tk-p">跨政府</span></div>
+    </details>
+
+    <!-- Safer Skies Act -->
+    <details class="NC law">
+      <summary>
+        <span class="tkr tk-y">S.3481</span><span class="NBADG law">立法</span>
+        <div class="ntt">Safer Skies Act — 州/地方執法反無人機授權</div>
+        <div class="amt amt-y">$500M FEMA</div>
+        <div class="dt">2025/12/17 併入 FY26 NDAA</div>
+      </summary>
+      <div class="exp">Safer Skies Act 於 2025/12/17 併入 FY2026 NDAA。首度授權州、地方、部落、屬地執法機構偵測並實體處置無人機威脅，為 2018 以來最大擴權。FEMA 提供 $500M C-UAS 補助（FY26/27 各 $250M）：FY26 優先分配給主辦 FIFA 世界盃州份；FY27 擴大至全 56 州及屬地。<span class="tag tk-r">執法擴權</span><span class="tag tk-c">FEMA補助</span></div>
+    </details>
+
+    <!-- Section 1709 - DJI/Autel Ban -->
+    <details class="NC law">
+      <summary>
+        <span class="tkr tk-y">§1709</span><span class="NBADG law">立法</span>
+        <div class="ntt">FY25 NDAA §1709 — DJI/Autel 禁令 + FCC 全外國 UAS Covered List</div>
+        <div class="amt amt-y">全面禁售</div>
+        <div class="dt">2025/12/22 FCC · 2026/7/30 意見徵詢</div>
+      </summary>
+      <div class="exp">FY2025 NDAA §1709 明列 DJI 及 Autel Robotics 為國安風險企業，禁止其通訊/監視設備在美銷售（含關聯公司）。FCC 於 2025/12/22 進一步將所有外國製 UAS 及關鍵零組件全數列入 Covered List。2026/7/30 聯邦公報徵詢 §1709 進口/行銷全面禁令。直接利多 UMAC (NDAA 合規零組件)、LPTH (去中國光學)、KOPN (美製顯示器)。<span class="tag tk-g">NDAA合規利多</span><span class="tag tk-r">禁 DJI</span></div>
+    </details>
+
+    <!-- Robotic Autonomous Systems Command -->
+    <details class="NC law">
+      <summary>
+        <span class="tkr tk-y">USRASC</span><span class="NBADG law">立法</span>
+        <div class="ntt">機器人與自主系統司令部 (USRASC) 提案</div>
+        <div class="amt amt-y">首個技術司令部</div>
+        <div class="dt">FY27 NDAA · 提案階段</div>
+      </summary>
+      <div class="exp">FY27 NDAA 參院版本允許（非強制）行政部門與五角大廈成立「美國機器人與自主系統司令部」(U.S. Robotic and Autonomous Systems Command)。若通過，將是首個圍繞特定技術（自主系統）而非地理/職能組建的作戰司令部。反映無人系統戰略地位提升。<span class="tag tk-p">戰略</span><span class="tag tk-c">組織變革</span></div>
+    </details>
+
+    <!-- NOAA Hurricane 2026 -->
+    <details class="NC noa">
+      <summary>
+        <span class="tkr tk-b">NOAA</span><span class="NBADG noa">計畫</span>
+        <div class="ntt">2026 颶風季 UAS 觀測 — 首次入模</div>
+        <div class="amt amt-b">10 USV + 多 UAS</div>
+        <div class="dt">2026/07-11 · Atlantic</div>
+      </summary>
+      <div class="exp">NOAA 2026 颶風季部署：Saildrone Explorer USV 10 艘 (7-11月) 於熱帶大西洋、加勒比海、墨西哥灣運作；Black Swift S0 sUAS 從有人機同時發射多架，資料首次併入 NOAA 颶風預報模型。此為 UAS 走向 NOAA 常規業務的關鍵里程碑。<span class="tag tk-b">氣象</span><span class="tag tk-c">USV/UAS</span></div>
+    </details>
+
+    <div class="PGH" style="color:var(--org);background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(234,179,8,.05))">💼 8 家公司近期合約與收購 — 按日期排序</div>
+
+    <!-- ONDS Israel Digital Bat -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-o">ONDS</span><span class="NBADG">合約</span>
+        <div class="ntt">🇮🇱 以色列國防部「Digital Bat」戰術攻擊無人機</div>
+        <div class="amt amt-o">數百萬美元</div>
+        <div class="dt">2026/08/11 · 以色列 MoD</div>
+      </summary>
+      <div class="exp">Ondas 獲以色列國防部標案，主導開發次世代低成本戰術攻擊無人機「Digital Bat」。涵蓋平台、自主能力、任務整合、C2 相容性，支援前線作戰單位規模化部署。CEO Eric Brock 稱此案驗證 Ondas 主承包商地位。股價當週漲約 8%。<span class="tag tk-r">攻擊無人機</span><span class="tag tk-p">以色列</span></div>
+    </details>
+
+    <!-- ONDS NFL Jaguars -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-o">ONDS</span><span class="NBADG">合約</span>
+        <div class="ntt">🏈 NFL 傑克遜維爾美洲虎 反無人機防護</div>
+        <div class="amt amt-o">Sentrycs CoRF</div>
+        <div class="dt">2026/08/07 · EverBank Stadium</div>
+      </summary>
+      <div class="exp">Ondas 子公司 Sentrycs 獲選為 NFL 傑克遜維爾美洲虎主場 EverBank Stadium 提供反無人機防護，為首個投資先進反 UAS 的 NFL 球隊。採 Cyber-over-RF (CoRF) 系統，依 Safer Skies Act 執行 TFR 管制。延續 2026 FIFA 世界盃多場館部署經驗，由受訓執法人員操作。<span class="tag tk-r">反無人機</span><span class="tag tk-c">體育場館</span></div>
+    </details>
+
+    <!-- ONDS Israel Demining $10M -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-o">ONDS</span><span class="NBADG">合約</span>
+        <div class="ntt">🇮🇱 以色列排雷計畫追加訂單</div>
+        <div class="amt amt-o">$10M</div>
+        <div class="dt">2026/08 · 以色列</div>
+      </summary>
+      <div class="exp">Ondas 子公司（4M Defense）獲 $10M 以色列排雷計畫訂單，延續先前邊境排雷合約。強化自主國防故事及以色列生態系佈局。<span class="tag tk-o">排雷</span><span class="tag tk-p">以色列</span></div>
+    </details>
+
+    <!-- RCAT Washington Commanders -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-r">RCAT</span><span class="NBADG" style="background:rgba(6,182,212,.2);color:var(--cyn);border-color:rgba(6,182,212,.35)">合作</span>
+        <div class="ntt">🏈 NFL 華盛頓司令 多年行銷合作</div>
+        <div class="amt amt-r">品牌行銷</div>
+        <div class="dt">2026/08/10 · Northwest Stadium</div>
+      </summary>
+      <div class="exp">Red Cat 與 NFL 華盛頓司令 (Washington Commanders) 簽多年合作，支援軍人、退伍軍人及軍眷。含場館品牌露出、數位看板、軍人感謝活動、社區倡議。跨全美最大媒體市場之一的行銷曝光。<span class="tag tk-r">品牌</span><span class="tag tk-c">軍民關係</span></div>
+    </details>
+
+    <!-- KOPN FPV optical module $3.2M -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-p">KOPN</span><span class="NBADG">合約</span>
+        <div class="ntt">FPV 無人機光學模組 — 進軍 FPV 市場</div>
+        <div class="amt amt-p">$3.2M</div>
+        <div class="dt">2026/08 · 最多 40,000 副</div>
+      </summary>
+      <div class="exp">Kopin 獲 $3.2M 初始訂單，供應合作夥伴次世代 FPV 無人機飛行員護目鏡光學模組，正式進軍 FPV 無人機市場。計畫至 2028 年底最多交付 40,000 副護目鏡。<span class="tag tk-p">FPV</span><span class="tag tk-r">新市場</span></div>
+    </details>
+
+    <!-- LPTH $11M IR camera C-UAS -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-b">LPTH</span><span class="NBADG">合約</span>
+        <div class="ntt">紅外相機系統追加訂單（反無人機）</div>
+        <div class="amt amt-b">$11M</div>
+        <div class="dt">2026/07-08 · 全球科技客戶</div>
+      </summary>
+      <div class="exp">LightPath 獲主要全球科技客戶 $11M 紅外相機系統追加訂單，支援反無人機應用。計畫由傳統鍺光學轉換至專利 BlackDiamond 材料。消息帶動股價漲 9.9%。<span class="tag tk-r">反無人機</span><span class="tag tk-b">IR相機</span></div>
+    </details>
+
+    <!-- AVAV LOCUST $400M -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-k">AVAV</span><span class="NBADG">合約</span>
+        <div class="ntt">陸軍 LOCUST 雷射反無人機系統</div>
+        <div class="amt amt-k">$400M</div>
+        <div class="dt">2026/08 · US Army</div>
+      </summary>
+      <div class="exp">AeroVironment 獲美國陸軍 LOCUST 雷射反無人機系統合約 $400M。BlueHalo 整合後首個大型定向能訂單，股價當日漲 9.1%。<span class="tag tk-k">定向能</span><span class="tag tk-r">反無人機</span></div>
+    </details>
+
+    <!-- ONDS Cyberhawk -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-o">ONDS</span><span class="NBADG acq">收購</span>
+        <div class="ntt">完成收購 Cyberhawk（AI 關鍵基礎設施）</div>
+        <div class="amt amt-o">已完成</div>
+        <div class="dt">2026/08/10 · UK</div>
+      </summary>
+      <div class="exp">Ondas 完成 Cyberhawk 收購。Cyberhawk 為無人機檢測、視覺資料管理、AI 資產智慧解決方案的全球領導者，服務關鍵基礎設施客戶。<span class="tag tk-o">AI</span><span class="tag tk-b">基礎設施</span></div>
+    </details>
+
+    <!-- ONDS US Army $50M + AFRL $6M -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-o">ONDS</span><span class="NBADG">合約</span>
+        <div class="ntt">陸軍 &gt;$50M + AFRL &gt;$6M（48hr 內）</div>
+        <div class="amt amt-o">&gt;$56M</div>
+        <div class="dt">2026/08 · DoD</div>
+      </summary>
+      <div class="exp">Ondas 於 48 小時內獲美國陸軍合約 &gt;$50M 及 AFRL 獎項 &gt;$6M。上調 2026 全年營收目標至 ≥$525M（原 ≥$390M）。<span class="tag tk-o">DoD</span><span class="tag tk-r">上調指引</span></div>
+    </details>
+
+    <!-- KTOS Javelin -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-y">KTOS</span><span class="NBADG">合約</span>
+        <div class="ntt">Javelin 飛彈次世代導引頭研發</div>
+        <div class="amt amt-y">研發合約</div>
+        <div class="dt">2026/08/06 · US Army</div>
+      </summary>
+      <div class="exp">Kratos 獲陸軍 DEVCOM C5ISR Center 合約，為 Javelin 近戰飛彈系統研發強化型導引頭 (Enhanced Seeker)。於 Birmingham, Alabama 先進製造中心執行。<span class="tag tk-y">飛彈</span><span class="tag tk-r">導引頭</span></div>
+    </details>
+
+    <!-- RCAT USAF -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-r">RCAT</span><span class="NBADG">合約</span>
+        <div class="ntt">空軍 Black Widow 系統訂單</div>
+        <div class="amt amt-r">$2.49M</div>
+        <div class="dt">2026/07/30 · USAF</div>
+      </summary>
+      <div class="exp">Teal Drones 獲美國空軍固定價合約 $2.49M，供應 Black Widow sUAS、訓練師培訓、電池及備件。空軍安全部隊評估 Black Widow 為 Teal 2 的接替者。交付截至 2026/08/24。<span class="tag tk-r">sUAS</span><span class="tag tk-b">USAF</span></div>
+    </details>
+
+    <!-- LPTH China divestment -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-b">LPTH</span><span class="NBADG acq">處分</span>
+        <div class="ntt">處分中國子公司 LPOIZ（去中國化）</div>
+        <div class="amt amt-b">$4.5M</div>
+        <div class="dt">2026/07/23</div>
+      </summary>
+      <div class="exp">LightPath 簽訂定案協議出售中國全資子公司 LPOIZ（含鎮江製造廠），售價 $4.5M 分五年支付。買方為現任管理團隊實體。加速美國本土化戰略。<span class="tag tk-b">去中國化</span><span class="tag tk-r">NDAA</span></div>
+    </details>
+
+    <!-- LPTH $13M optical -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-b">LPTH</span><span class="NBADG">合約</span>
+        <div class="ntt">追加 C-UAS 光學組件訂單</div>
+        <div class="amt amt-b">$13M</div>
+        <div class="dt">2026/07/22</div>
+      </summary>
+      <div class="exp">獲領先 C-UAS 與國防系統供應商 $13M 追加訂單，供應光學組件。CY2027 交付完成。反映反無人機需求爆發，美軍及盟國急需。<span class="tag tk-r">反無人機</span><span class="tag tk-b">光學組件</span></div>
+    </details>
+
+    <!-- KTOS $156M C-UAS -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-y">KTOS</span><span class="NBADG">合約</span>
+        <div class="ntt">DOE/NNSA 行動式反無人機 IDIQ</div>
+        <div class="amt amt-y">$156M</div>
+        <div class="dt">2026/07/21 · Solar Shield</div>
+      </summary>
+      <div class="exp">獲美國能源部 NNSA 安全運輸辦公室 (OST) 單一來源 IDIQ 合約 ~$156M，支援「Solar Shield 計畫」。提供行動式反無人機系統，保護核國家安全任務。<span class="tag tk-r">反無人機</span><span class="tag tk-p">核安全</span></div>
+    </details>
+
+    <!-- AVAV P550 -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-k">AVAV</span><span class="NBADG">合約</span>
+        <div class="ntt">陸軍 P550 全速率量產（82 架）</div>
+        <div class="amt amt-k">$117.3M</div>
+        <div class="dt">2026/07/20 · US Army</div>
+      </summary>
+      <div class="exp">獲美國陸軍 P550 電動 VTOL UAS 全速率量產合約 $117.3M，採購 82 架。P550 為陸軍長程偵察 (LRR) 標準平台，可整合 RCAT FANG FPV。<span class="tag tk-k">VTOL UAS</span><span class="tag tk-r">量產</span></div>
+    </details>
+
+    <!-- ONDS Australia -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-o">ONDS</span><span class="NBADG">合約</span>
+        <div class="ntt">澳洲國防部 DTIM 反 SUAS 套件</div>
+        <div class="amt amt-o">$6.9M</div>
+        <div class="dt">2026/07/20 · Australia DoD</div>
+      </summary>
+      <div class="exp">Ondas 獲澳洲國防部 $6.9M 合約，交付 DTIM 單兵反 SUAS 套件。國際反無人機出口佈局擴展。<span class="tag tk-r">反無人機</span><span class="tag tk-b">國際</span></div>
+    </details>
+
+    <!-- KTOS $100M Space -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-y">KTOS</span><span class="NBADG">合約</span>
+        <div class="ntt">太空域感知模組化地面系統量產</div>
+        <div class="amt amt-y">$100M</div>
+        <div class="dt">2026/07/13 · 國安客戶</div>
+      </summary>
+      <div class="exp">獲 ~$100M 單一來源主承包合約，量產地面模組化太空域感知 (SDA) 系統，供國家安全客戶。於 Kratos 自有安全設施製造。<span class="tag tk-p">太空</span><span class="tag tk-c">SDA</span></div>
+    </details>
+
+    <!-- LASR JLWS -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-c">LASR</span><span class="NBADG">合約</span>
+        <div class="ntt">JLWS 聯合雷射武器系統 OTA</div>
+        <div class="amt amt-c">$44M / $627M</div>
+        <div class="dt">2026/07/09 · DoW</div>
+      </summary>
+      <div class="exp">nLIGHT 獲 Joint Laser Weapon System (JLWS) OTA 協議，初始 $44M、總計畫上限 $627M（含後續開發、整合、量產）。支援 DoW 次世代巡弋飛彈防禦架構。應用 HADES™ 高能雷射家族，涵蓋反 UAS/RAM/飛彈防禦。<span class="tag tk-c">定向能</span><span class="tag tk-r">飛彈防禦</span></div>
+    </details>
+
+    <!-- ONDS DZYNE Acquisition -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-o">ONDS</span><span class="NBADG acq">收購</span>
+        <div class="ntt">DZYNE Technologies 變革性收購</div>
+        <div class="amt amt-o">$875.8M</div>
+        <div class="dt">2026/07/06</div>
+      </summary>
+      <div class="exp">Ondas 宣布收購 DZYNE Technologies，金額 $875.8M（現金+股票）。建立領先自主國防平台，涵蓋多域 ISR、反 UAS、自主打擊、空域安全、精確打擊、自主物流及 AI 任務協調。<span class="tag tk-r">自主國防</span><span class="tag tk-p">多域</span></div>
+    </details>
+
+    <!-- KTOS Air Defense $36M -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-y">KTOS</span><span class="NBADG">合約</span>
+        <div class="ntt">新型防空飛彈系統單一來源合約</div>
+        <div class="amt amt-y">$36M</div>
+        <div class="dt">2026/07/02</div>
+      </summary>
+      <div class="exp">Kratos 獲 ~$36M 單一來源合約，開發新型防空飛彈系統。<span class="tag tk-r">防空</span><span class="tag tk-p">飛彈</span></div>
+    </details>
+
+    <!-- AVAV $500M C-UAS -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-k">AVAV</span><span class="NBADG">合約</span>
+        <div class="ntt">陸軍商用反無人機採購</div>
+        <div class="amt amt-k">$500M</div>
+        <div class="dt">2026/07/01 · US Army</div>
+      </summary>
+      <div class="exp">獲 $500M 合約，採購商用反無人機系統及技術，對抗小型無人機。合約期至 2029/06/29。<span class="tag tk-r">反無人機</span><span class="tag tk-b">量產</span></div>
+    </details>
+
+    <!-- KOPN $21.5M thermal -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-p">KOPN</span><span class="NBADG">合約</span>
+        <div class="ntt">主要國防承包商熱成像組件追加</div>
+        <div class="amt amt-p">$21.5M</div>
+        <div class="dt">2026/05/05</div>
+      </summary>
+      <div class="exp">Kopin 獲主要美國國防主承包商 $21.5M 追加量產合約，客製化熱成像目鏡組件。應用於可拆卸單兵熱武器系統。含微顯示器、精密光學、驅動電路、堅固化外殼。<span class="tag tk-p">熱成像</span><span class="tag tk-b">單兵武器</span></div>
+    </details>
+
+    <!-- UMAC Upgrade Energy -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-g">UMAC</span><span class="NBADG acq">收購</span>
+        <div class="ntt">Upgrade Energy 收購（電池業務）</div>
+        <div class="amt amt-g">&gt;$50M</div>
+        <div class="dt">2026 Q1 揭露</div>
+      </summary>
+      <div class="exp">Unusual Machines 宣布收購 Upgrade Energy &gt;$50M，加速電池業務並擴大產品線。搭配 Q1 $150M 增資（$17/股），現金達 $222.9M。<span class="tag tk-g">電池</span><span class="tag tk-y">垂直整合</span></div>
+    </details>
+
+    <!-- RCAT Quaze -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-r">RCAT</span><span class="NBADG acq">收購</span>
+        <div class="ntt">Quaze Technologies 自主平台技術</div>
+        <div class="amt amt-r">$30M</div>
+        <div class="dt">2026/03/30</div>
+      </summary>
+      <div class="exp">Red Cat 完成收購 Quaze Technologies，加入自主平台技術能力。搭配 Apium 蜂群強化 Black Widow / Hellcat 自主性。<span class="tag tk-r">自主平台</span><span class="tag tk-p">蜂群</span></div>
+    </details>
+
+    <!-- AVAV Puma Germany -->
+    <details class="NC">
+      <summary>
+        <span class="tkr tk-k">AVAV</span><span class="NBADG">合約</span>
+        <div class="ntt">德國 LARUS 計畫 Puma 系統棧</div>
+        <div class="amt amt-k">$30M</div>
+        <div class="dt">2026/07 · NATO NSPA</div>
+      </summary>
+      <div class="exp">獲 NATO 支援與採購局 (NSPA) 合約 $30M，為德國 LARUS 計畫供應 Puma Systems Stack。<span class="tag tk-b">NATO</span><span class="tag tk-p">Puma</span></div>
+    </details>
+
+  </div>
+
+  <script>
+  (function(){
+    var newSec = document.getElementById('new');
+    if(!newSec) return;
+    var grid = newSec.querySelector('.NGRD');
+    var cards = grid.querySelectorAll('details.NC');
+    var cntEl = document.getElementById('fltCnt');
+    var state = {co:'all', tp:'all'};
+
+    // 為每張卡標記所屬公司群組與類型
+    var LAW_TICKERS = ['FY27','FY26','S.3481','§1709','USRASC'];
+    var PROG_TICKERS = ['DoW','KTOS+Teal','AVAV+KTOS','LRR','SRR','Teal'];
+    cards.forEach(function(d){
+      var tkrs = [].slice.call(d.querySelectorAll('.tkr')).map(function(x){return x.textContent.trim()});
+      var badge = (d.querySelector('.NBADG')||{}).textContent || '';
+      badge = badge.trim();
+      var group;
+      if(d.classList.contains('law') || tkrs.some(function(t){return LAW_TICKERS.indexOf(t)>=0})){ group='LAW'; }
+      else if(d.classList.contains('noa') || tkrs.indexOf('NOAA')>=0){ group='NOAA'; }
+      else if(d.classList.contains('pgm')){ group='PROG'; }
+      else { group='CO'; }
+      d.dataset.grp = group;
+      d.dataset.cos = tkrs.join(',').replace(/Teal/g,'RCAT'); // Teal 歸 RCAT
+      d.dataset.tp = badge;
+    });
+
+    function apply(){
+      var shown=0;
+      cards.forEach(function(d){
+        var okCo;
+        if(state.co==='all') okCo=true;
+        else if(state.co==='LAW') okCo=(d.dataset.grp==='LAW');
+        else if(state.co==='PROG') okCo=(d.dataset.grp==='PROG');
+        else if(state.co==='NOAA') okCo=(d.dataset.grp==='NOAA');
+        else { // 特定 ticker：同時允許純公司卡 + 政府計畫中提到此公司的卡
+          okCo=(','+d.dataset.cos+',').indexOf(','+state.co+',')>=0;
+        }
+        var okTp=(state.tp==='all')||(d.dataset.tp===state.tp);
+        var show=okCo&&okTp;
+        d.style.display = show?'':'none';
+        if(show) shown++;
+      });
+      // 隱藏空的 PGH 分區標題
+      var pghs = grid.querySelectorAll('.PGH');
+      pghs.forEach(function(h){
+        // 找到此 PGH 到下個 PGH 之間有無可見卡
+        var el=h.nextElementSibling, hasVisible=false;
+        while(el && !el.classList.contains('PGH')){
+          if(el.tagName==='DETAILS' && el.style.display!=='none'){hasVisible=true;break}
+          el=el.nextElementSibling;
+        }
+        h.style.display = hasVisible?'':'none';
+      });
+      cntEl.textContent = '顯示 '+shown+' / '+cards.length+' 則';
+    }
+
+    newSec.querySelectorAll('.chip[data-fco]').forEach(function(b){
+      b.addEventListener('click', function(){
+        newSec.querySelectorAll('.chip[data-fco]').forEach(function(x){x.classList.remove('on')});
+        b.classList.add('on');
+        state.co = b.dataset.fco;
+        apply();
+      });
+    });
+    newSec.querySelectorAll('.chip[data-ftp]').forEach(function(b){
+      b.addEventListener('click', function(){
+        newSec.querySelectorAll('.chip[data-ftp]').forEach(function(x){x.classList.remove('on')});
+        b.classList.add('on');
+        state.tp = b.dataset.ftp;
+        apply();
+      });
+    });
+    apply();
+  })();
+  </script>
+</div>
+
+<!-- ╔════════════════════════════════════════════╗ -->
+<!-- ║           RCAT — Red Cat Holdings          ║ -->
+<!-- ╚════════════════════════════════════════════╝ -->
+<div class="DV" id="rcat"><span style="color:var(--red)">🦅 RCAT</span></div>
+<div class="CH">
+  <h2>RED CAT HOLDINGS</h2>
+  <div class="m">NASDAQ: RCAT｜~$11.13｜市值 ~$1.70B</div>
+  <div class="tgs">
+    <span class="T Tr">🎯 國防無人機</span><span class="T To">📈 Q1FY26 $15.5M (+849%)</span><span class="T Tg">💰 現金 $385M</span><span class="T Tb">🏈 NFL司令合作</span><span class="T Tp">🆕 Hellcat新平台</span><span class="T Tc">🎯 $150-180M目標</span><span class="T Ty">🦅 Drone Dominance</span>
+  </div>
+</div>
+
+<div class="S"><div class="SH"><h3>📊 Q1 FY2026 業績</h3><span class="d">2026/5/7</span></div>
+<div class="SB"><div class="IC"><div class="IC-t">🔥 Q1營收 $15.5M (YoY +849%)｜毛利率12.7% (大幅改善)</div><span class="BG BG-n">⚡最新</span>
+<div class="IC-d">Q1 FY26營收$15.5M，YoY+849%。毛利率12.7%，較Q4的4%大幅改善(+199%環比)。營運虧損$27.3M，淨虧損$26.6M。現金$131.9M，庫存$50.5M。完成$259M增發，現金達$385M。年化營收目標$150-$180M。Eurosatory 2026發布Hellcat新平台。收購Quaze Technologies $30M。進入Drone Dominance計畫最後階段。</div>
+<div class="KR"><div class="K r"><div class="v">$15.5M</div><div class="l">Q1營收</div></div><div class="K o"><div class="v">849%</div><div class="l">YoY</div></div><div class="K g"><div class="v">$385M</div><div class="l">現金</div></div><div class="K b"><div class="v">12.7%</div><div class="l">毛利率</div></div><div class="K p"><div class="v">$150-180M</div><div class="l">年營收目標</div></div></div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>🎖️ 陸軍SRR主力合約 — Black Widow™</h3><span class="d">Program of Record</span></div>
+<div class="SB"><div class="IC hl-r"><div class="IC-t">🦅 Teal Drones Black Widow™ — SRR計畫</div><span class="BG BG-d">✅已簽約</span>
+<div class="IC-d">美國陸軍短程偵察計畫主力供應商。T2 LRIP合約~$35M+，最多可採購5,880架。Blue UAS認證、NATO NSPA目錄通過。與Palantir整合VNav視覺導航。</div>
+<div class="KR"><div class="K r"><div class="v">~$35M+</div><div class="l">T2合約</div></div><div class="K o"><div class="v">5,880架</div><div class="l">最大量</div></div></div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>✅ 認證</h3></div>
+<div class="SB"><div class="g4">
+  <div class="CC"><div class="cn">🛡️ Blue UAS <span class="T Tg" style="font-size:7px;padding:1px 4px">已認證</span></div><div class="cd">Black Widow、Edge 130、FANG FPV三系統通過。</div></div>
+  <div class="CC"><div class="cn">🌐 NATO NSPA <span class="T Tb" style="font-size:7px;padding:1px 4px">已認證</span></div><div class="cd">Black Widow列入NATO目錄，供32國採購。</div></div>
+  <div class="CC"><div class="cn">📋 NDAA合規 <span class="T Tg" style="font-size:7px;padding:1px 4px">合規</span></div><div class="cd">全線100%美國製造。FY25 NDAA §1709受惠。</div></div>
+  <div class="CC"><div class="cn">✈️ AS9100 <span class="T Tp" style="font-size:7px;padding:1px 4px">已認證</span></div><div class="cd">Teal Drones航太國防品質管理認證。</div></div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>🏢 子公司 (5間) · 產品 (6線)</h3></div>
+<div class="SB"><div class="g4">
+  <div class="CC hl-r"><div class="cn">🦅 Teal Drones</div><div class="cd">Black Widow SRR核心。鹽湖城總部。</div></div>
+  <div class="CC hl-b"><div class="cn">🌊 Blue Ops</div><div class="cd">海上USV部門。166K sqft。年產500+艘。</div></div>
+  <div class="CC hl-g"><div class="cn">🔄 FlightWave</div><div class="cd">Edge 130 VTOL。60+min飛行。51K sqft。</div></div>
+  <div class="CC hl-p"><div class="cn">🤖 Apium (2026/3收購)</div><div class="cd">自主蜂群控制技術。分散式多代理。</div></div>
+  <div class="CC hl-y"><div class="cn">🔧 Quaze (2026/3·$30M)</div><div class="cd">無人機技術公司。</div></div>
+</div>
+<div class="scr" style="margin-top:10px">
+  <div class="CC"><div class="cn" style="color:var(--red)">🦅 Black Widow™</div><div class="cd">SRR sUAS。陸軍主力。ISR/監視。</div></div>
+  <div class="CC"><div class="cn" style="color:var(--org)">🔥 FANG™ FPV</div><div class="cd">FPV打擊無人機。Blue UAS 2025/10。</div></div>
+  <div class="CC"><div class="cn" style="color:var(--grn)">🔄 Edge 130 Blue</div><div class="cd">VTOL中程ISR。1200g。軍用級。</div></div>
+  <div class="CC"><div class="cn" style="color:var(--blu)">🚢 Blue Ops USV</div><div class="cd">無人水面艦。整合Bullfrog反無人機。</div></div>
+  <div class="CC"><div class="cn" style="color:var(--pur)">🤖 IntelliSwarm</div><div class="cd">Apium蜂群控制系統。去中心化。</div></div>
+  <div class="CC"><div class="cn" style="color:var(--yel)">🐱 Hellcat™</div><div class="cd">Eurosatory 2026發布。GPS拒止、50+min飛行、6.8mi航程。</div></div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>🤝 Futures Initiative 合作</h3></div>
+<div class="SB"><div class="g3">
+  <div class="CC"><div class="cn">🔷 Palantir</div><div class="cd">VNav視覺導航整合至Black Widow。</div></div>
+  <div class="CC"><div class="cn">🔶 AeroVironment</div><div class="cd">FANG FPV部署於P550 UAS。</div></div>
+  <div class="CC"><div class="cn">🎯 Allen Control Systems</div><div class="cd">Bullfrog反無人機整合至USV。</div></div>
+  <div class="CC"><div class="cn">🔒 SpiderOak</div><div class="cd">Blue UAS資安評估及NIST合規。</div></div>
+  <div class="CC"><div class="cn">⚓ Hodgdon Shipbuilding</div><div class="cd">合作生產首批5艘USV原型。</div></div>
+  <div class="CC"><div class="cn">🇺🇦 烏克蘭STE</div><div class="cd">與國防部旗下STE簽MOU。多域合作。</div></div>
+</div></div></div>
+
+<!-- ╔════════════════════════════════════════════╗ -->
+<!-- ║           ONDS — Ondas Inc.                ║ -->
+<!-- ╚════════════════════════════════════════════╝ -->
+<div class="DV" id="onds"><span style="color:var(--org)">🏢 ONDS</span></div>
+<div class="CH">
+  <h2>ONDAS INC.</h2>
+  <div class="m">NASDAQ: ONDS｜~$9.24｜市值 ~$5.27B</div>
+  <div class="tgs">
+    <span class="T To">📈 Q1'26 $50.1M (+1,065%)</span><span class="T Tg">💰 GM 49%</span><span class="T Tr">🎯 2026 ≥$525M (上調)</span><span class="T Tb">📋 積壓 $457M</span><span class="T Tp">🤝 DZYNE $875.8M</span><span class="T Tc">🇮🇱 Digital Bat攻擊無人機</span><span class="T Ty">🏈 NFL/FIFA反無人機</span>
+  </div>
+</div>
+
+<div class="S"><div class="SH"><h3>📊 Q1 2026 業績</h3><span class="d">2026/5/14</span></div>
+<div class="SB"><div class="IC"><div class="IC-t">🔥 Q1營收$50.1M (YoY+1,065%)｜上調2026目標≥$390M</div><span class="BG BG-n">⚡最新</span>
+<div class="IC-d">Q1 $50.1M，超預期31% (預期$38.2M)。毛利$24.7M (+1,556% YoY)，毛利率49%。EPS $0.81 (預期-$0.05)。含Mistral及World View後pro forma積壓$457M。上調全年指引至≥$390M。股價盤前漲19.86%。</div>
+<div class="KR"><div class="K r"><div class="v">$50.1M</div><div class="l">Q1營收</div></div><div class="K o"><div class="v">1,065%</div><div class="l">YoY</div></div><div class="K g"><div class="v">49%</div><div class="l">毛利率</div></div><div class="K b"><div class="v">$457M</div><div class="l">積壓</div></div><div class="K p"><div class="v">≥$390M</div><div class="l">2026目標</div></div></div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>🎖️ Mistral收購 — 美國國防主承包商</h3><span class="d">$175M · 2026/4/24完成</span></div>
+<div class="SB"><div class="IC hl-r"><div class="IC-t">🏛️ Mistral Inc. — >$10億國防合約管道</div><span class="BG BG-d">✅已完成</span>
+<div class="IC-d">2026/4/24完成合併。$1.75億全股票。Mistral為美國國防主承包商，含$982M陸軍巡飛彈IDIQ。合併後直接以主承包商身份競標DoD、陸軍及特種作戰合約。Mistral積壓$264M (截至4/21)。</div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>📑 重大合約 · 收購</h3></div>
+<div class="SB"><div class="scr">
+  <div class="CC hl-r"><div class="cn">以色列排雷 <span class="T Tr" style="font-size:7px;padding:1px 4px">$15.8M</span></div><div class="cd">4M Defense，邊境排雷$30M→$60M。</div></div>
+  <div class="CC hl-o"><div class="cn">自主邊防 <span class="T To" style="font-size:7px;padding:1px 4px">$20M</span></div><div class="cd">Airobotics自主邊防系統。</div></div>
+  <div class="CC hl-b"><div class="cn">反無人機 <span class="T Tb" style="font-size:7px;padding:1px 4px">~$6M</span></div><div class="cd">反無人機系統訂單。</div></div>
+  <div class="CC hl-p"><div class="cn">BIRD Aero <span class="T Tp" style="font-size:7px;padding:1px 4px">50%·$65M+</span></div><div class="cd">飛機飛彈防護/ISR系統。估值$133M。</div></div>
+  <div class="CC hl-g"><div class="cn">Rotron 🇬🇧 <span class="T Tg" style="font-size:7px;padding:1px 4px">2026/3</span></div><div class="cd">英國無人機推進技術。NATO通路。</div></div>
+  <div class="CC hl-c"><div class="cn">Apium蜂群 <span class="T Tc" style="font-size:7px;padding:1px 4px">2026/3</span></div><div class="cd">自主蜂群技術公司收購。</div></div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>🇮🇱 以色列關係網絡</h3><span class="d">13+子公司/投資</span></div>
+<div class="SB"><div class="g3">
+  <div class="CC"><div class="cn">🚁 Airobotics <span class="T Tb" style="font-size:7px;padding:1px 4px">2023</span></div><div class="cd">Optimus無人機·Iron Drone Raider。</div></div>
+  <div class="CC"><div class="cn">🎯 Iron Drone <span class="T Tr" style="font-size:7px;padding:1px 4px">2023</span></div><div class="cd">反無人機攔截系統。</div></div>
+  <div class="CC"><div class="cn">🛡️ Sentrycs <span class="T Tg" style="font-size:7px;padding:1px 4px">2025</span></div><div class="cd">通訊偵測與接管。</div></div>
+  <div class="CC"><div class="cn">🤖 Roboteam <span class="T Tp" style="font-size:7px;padding:1px 4px">2025</span></div><div class="cd">地面機器人平台。</div></div>
+  <div class="CC"><div class="cn">💎 Apeiro <span class="T Tc" style="font-size:7px;padding:1px 4px">2025</span></div><div class="cd">AI感測器融合·DarkStar。</div></div>
+  <div class="CC"><div class="cn">💣 4M Defense <span class="T To" style="font-size:7px;padding:1px 4px">2025</span></div><div class="cd">排雷機器人·$15.8M合約。</div></div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>💰 戰略投資</h3><span class="d">生態系佈局</span></div>
+<div class="SB"><div class="scr">
+  <div class="CC hl-r"><div class="cn">🏗️ PDW Holdings <span class="T Tr" style="font-size:7px;padding:1px 4px">$35M</span></div><div class="cd">國防科技公司。</div></div>
+  <div class="CC hl-o"><div class="cn">🎈 World View</div><div class="cd">平流層ISR。與Palantir三方合作。</div></div>
+  <div class="CC hl-b"><div class="cn">🔭 LPTH <span class="T Tb" style="font-size:7px;padding:1px 4px">$8M</span></div><div class="cd">紅外線光學 (與UMAC共同)。</div></div>
+  <div class="CC hl-g"><div class="cn">🖥️ KOPN</div><div class="cd">微型顯示器光學。</div></div>
+  <div class="CC hl-p"><div class="cn">🔧 UMAC</div><div class="cd">NDAA合規無人機零組件。</div></div>
+</div></div></div>
+
+<!-- ╔════════════════════════════════════════════╗ -->
+<!-- ║        UMAC — Unusual Machines              ║ -->
+<!-- ╚════════════════════════════════════════════╝ -->
+<div class="DV" id="umac"><span style="color:var(--grn)">🔧 UMAC</span></div>
+<div class="CH">
+  <h2>UNUSUAL MACHINES</h2>
+  <div class="m">NYSE American: UMAC｜~$34.06｜NDAA合規無人機零組件</div>
+  <div class="tgs">
+    <span class="T Tg">📈 Q2'26 $16.7M (+687%)</span><span class="T Tb">💰 $229M現金</span><span class="T To">🏭 Orlando 62.5K sqft</span><span class="T Tr">🇺🇸 NDAA合規</span><span class="T Tp">🔋 Upgrade Energy收購</span><span class="T Tc">🎯 Q4目標$25M</span>
+  </div>
+</div>
+
+<div class="S"><div class="SH"><h3>📊 Q2 2026 業績</h3><span class="d">2026/8/6</span></div>
+<div class="SB"><div class="IC"><div class="IC-t">🔥 Q2 $16.7M (+687% YoY, +107% QoQ)｜零負債</div><span class="BG BG-n">⚡最新</span>
+<div class="IC-d">Q2營收$16.7M，YoY+687%、環比+107%，超預期74.6%。企業客戶佔95%。GAAP淨虧$7.8M，調整後EBITDA虧損收窄至~$40萬 (Q1為$160萬)。毛利率34.7% (低於40%目標)。現金$229M + 短期投資$86M+，零負債。Q3目標$12-14M、Q4 $25M，需求受供應鏈限制延伸至2027。<br><span style="color:var(--t3);font-size:9px">Q1 FY26：$8.1M (+296%)、淨利$10.3M (含$17.5M投資收益)</span></div>
+<div class="KR"><div class="K g"><div class="v">$16.7M</div><div class="l">Q2營收</div></div><div class="K o"><div class="v">687%</div><div class="l">YoY</div></div><div class="K b"><div class="v">$229M</div><div class="l">現金</div></div><div class="K r"><div class="v">34.7%</div><div class="l">毛利率</div></div><div class="K p"><div class="v">$25M</div><div class="l">Q4目標</div></div></div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>🔧 產品線 · 合作</h3></div>
+<div class="SB"><div class="g3">
+  <div class="CC"><div class="cn">🎮 飛控器 / ESC</div><div class="cd">NDAA合規飛行控制及電調，美國製造。</div></div>
+  <div class="CC"><div class="cn">🔩 馬達 · 📹 視訊</div><div class="cd">已在地化生產。FPV視頻系統。</div></div>
+  <div class="CC"><div class="cn">🥽 Fat Shark</div><div class="cd">FPV頭戴顯示器，美國製造。</div></div>
+  <div class="CC"><div class="cn">🔷 Lantronix <span class="T Tb" style="font-size:7px;padding:1px 4px">AI</span></div><div class="cd">邊緣AI計算與飛控整合。</div></div>
+  <div class="CC"><div class="cn">🏢 ONDS <span class="T To" style="font-size:7px;padding:1px 4px">投資者</span></div><div class="cd">Ondas戰略投資。</div></div>
+  <div class="CC"><div class="cn">🖥️ KOPN <span class="T Tp" style="font-size:7px;padding:1px 4px">合作</span></div><div class="cd">微型顯示器/FPV合作。</div></div>
+</div></div></div>
+
+<!-- ╔════════════════════════════════════════════╗ -->
+<!-- ║      LPTH — LightPath Technologies         ║ -->
+<!-- ╚════════════════════════════════════════════╝ -->
+<div class="DV" id="lpth"><span style="color:var(--blu)">🔭 LPTH</span></div>
+<div class="CH">
+  <h2>LIGHTPATH TECHNOLOGIES</h2>
+  <div class="m">NASDAQ: LPTH｜~$13.95｜紅外線光學/成像</div>
+  <div class="tgs">
+    <span class="T Tb">📈 Q3FY26 $19.1M (+109%)</span><span class="T Tg">📋 積壓 $110.6M</span><span class="T Tr">🔥 BlackDiamond™</span><span class="T To">🛡️ 國防IR相機</span><span class="T Tp">💎 EBITDA轉正</span>
+  </div>
+</div>
+
+<div class="S"><div class="SH"><h3>📊 Q3 FY2026 (截至2026/3)</h3><span class="d">2026/5/7</span></div>
+<div class="SB"><div class="IC"><div class="IC-t">🔥 Q3營收 $19.1M (+109%)｜積壓創紀錄 $110.6M｜EBITDA轉正</div><span class="BG BG-n">⚡最新</span>
+<div class="IC-d">Q3 FY26營收$19.1M (+109% YoY)。毛利$7.0M (+161% YoY)，毛利率36%。調整後EBITDA轉正$1.1M (去年-$1.6M)。積壓$110.6M (+196%)。G5 Infrared過去一年新訂單逾$100M。正將G5相機重新設計整合BlackDiamond玻璃，需求持續增長。</div>
+<div class="KR"><div class="K b"><div class="v">$19.1M</div><div class="l">Q3FY26</div></div><div class="K o"><div class="v">109%</div><div class="l">YoY</div></div><div class="K g"><div class="v">$110.6M</div><div class="l">積壓</div></div><div class="K r"><div class="v">$1.1M</div><div class="l">Adj EBITDA</div></div></div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>📑 重大訂單 · 技術</h3></div>
+<div class="SB"><div class="scr">
+  <div class="CC hl-r"><div class="cn">全球科技客戶 <span class="T Tr" style="font-size:7px;padding:1px 4px">$18.2M</span></div><div class="cd">IR相機·CY2026交付。</div></div>
+  <div class="CC hl-o"><div class="cn">追加訂單 <span class="T To" style="font-size:7px;padding:1px 4px">$22.1M</span></div><div class="cd">第二批·CY2027交付。</div></div>
+  <div class="CC hl-b"><div class="cn">國防反UAS <span class="T Tb" style="font-size:7px;padding:1px 4px">$9.7M</span></div><div class="cd">冷卻式IR相機反無人機。</div></div>
+  <div class="CC hl-g"><div class="cn">國防追加 <span class="T Tg" style="font-size:7px;padding:1px 4px">$9.6M</span></div><div class="cd">既有國防客戶追加。</div></div>
+  <div class="CC hl-p"><div class="cn">L3Harris SPEIR <span class="T Tp" style="font-size:7px;padding:1px 4px">$2.2M</span></div><div class="cd">海軍SPEIR工程開發。</div></div>
+  <div class="CC hl-c"><div class="cn">公共安全 <span class="T Tc" style="font-size:7px;padding:1px 4px">$4.8M</span></div><div class="cd">IR相機公安應用。</div></div>
+</div>
+<div class="g3" style="margin-top:10px">
+  <div class="CC hl-r"><div class="cn">💎 BlackDiamond™</div><div class="cd">專利硫化物玻璃取代鍺。海軍研究實驗室獨家授權。</div></div>
+  <div class="CC hl-b"><div class="cn">📷 G5 Infrared</div><div class="cd">冷卻/非冷卻IR相機模組。多年期國防計畫。</div></div>
+  <div class="CC hl-g"><div class="cn">💎 AMI (2026/1收購)</div><div class="cd">大口徑硫化物玻璃熔融技術。</div></div>
+</div></div></div>
+
+<!-- ╔════════════════════════════════════════════╗ -->
+<!-- ║       KOPN — Kopin Corporation              ║ -->
+<!-- ╚════════════════════════════════════════════╝ -->
+<div class="DV" id="kopn"><span style="color:var(--pur)">🖥️ KOPN</span></div>
+<div class="CH">
+  <h2>KOPIN CORPORATION</h2>
+  <div class="m">NASDAQ: KOPN｜~$4.21｜微型顯示器</div>
+  <div class="tgs">
+    <span class="T Tp">📈 Q2'26 $12.7M (+51%)</span><span class="T Tg">💰 Strong Buy $7.63</span><span class="T Tb">🎯 2026 $52-60M</span><span class="T Tr">🔬 MicroLED</span><span class="T To">🕹️ 進軍FPV $3.2M</span><span class="T Tc">🏭 美國OLED製造</span>
+  </div>
+</div>
+
+<div class="S"><div class="SH"><h3>📊 Q2 2026 業績</h3><span class="d">2026/8/10</span></div>
+<div class="SB"><div class="IC"><div class="IC-t">🔥 Q2 $12.7M (+51% YoY)｜進軍 FPV 無人機市場</div><span class="BG BG-n">⚡最新</span>
+<div class="IC-d">Q2營收$12.7M (+51% YoY，去年$8.5M)。獲 $3.2M FPV 護目鏡光學模組初始訂單，至2028最多40,000副，正式進軍FPV市場。DDP量產訂單預計8月底 Phase 2 評估後啟動。維持2026全年$52-60M。6位分析師Strong Buy，目標$7.63。<br><span style="color:var(--t3);font-size:9px">Q1 FY26：$10.6M (持平)、淨虧$3.8M</span></div>
+<div class="KR"><div class="K p"><div class="v">$12.7M</div><div class="l">Q2營收</div></div><div class="K o"><div class="v">51%</div><div class="l">YoY</div></div><div class="K b"><div class="v">$3.2M</div><div class="l">FPV訂單</div></div><div class="K g"><div class="v">$52-60M</div><div class="l">2026指引</div></div></div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>🔬 核心技術 · 合約 · 合作</h3></div>
+<div class="SB"><div class="g3">
+  <div class="CC hl-p"><div class="cn">🔴 IBAS MicroLED <span class="T Tr" style="font-size:7px;padding:1px 4px">$15.4M</span></div><div class="cd">美國陸軍Color MicroLED。目標2027量產。Soldier-Borne Mission Command。</div></div>
+  <div class="CC hl-b"><div class="cn">🌙 DarkWAVE模組</div><div class="cd">與Theon合作960p NVG AR模組。200萬+台升級市場。ITAR-free。</div></div>
+  <div class="CC hl-g"><div class="cn">🎯 熱成像瞄準具</div><div class="cd">AMLCD微型顯示器。主營收來源。</div></div>
+  <div class="CC"><div class="cn">🇬🇷 Theon International <span class="T To" style="font-size:7px;padding:1px 4px">戰略</span></div><div class="cd">全球NVG/熱成像領導者。歐洲+東南亞通路。NVG市場$8.6B→$12.9B。</div></div>
+  <div class="CC"><div class="cn">🏢 ONDS <span class="T To" style="font-size:7px;padding:1px 4px">投資者</span></div><div class="cd">Ondas戰略投資。</div></div>
+  <div class="CC"><div class="cn">🔧 UMAC <span class="T Tg" style="font-size:7px;padding:1px 4px">合作</span></div><div class="cd">無人機顯示器/FPV整合。</div></div>
+</div></div></div>
+
+<!-- ╔════════════════════════════════════════════╗ -->
+<!-- ║         LASR — nLIGHT, Inc.                ║ -->
+<!-- ╚════════════════════════════════════════════╝ -->
+<div class="DV" id="lasr"><span style="color:var(--cyn)">⚡ LASR</span></div>
+<div class="CH">
+  <h2>nLIGHT, INC.</h2>
+  <div class="m">NASDAQ: LASR｜~$52.60｜市值 ~$3.03B｜高功率雷射/定向能</div>
+  <div class="tgs">
+    <span class="T Tc">📈 Q2'26 $82.6M</span><span class="T Tp">⚡ JLWS上限$627M</span><span class="T Tr">⚠️ 中國光學短缺 延$17M</span><span class="T Ty">📉 Q3指引$63-73M</span><span class="T Tb">🛡️ A&D創紀錄</span><span class="T To">🎯 雷射武器預算$1B/年</span>
+  </div>
+</div>
+
+<div class="S"><div class="SH"><h3>📊 Q2 2026 業績</h3><span class="d">2026/8/6</span></div>
+<div class="SB"><div class="IC"><div class="IC-t">⚠️ Q2 $82.6M｜A&D創紀錄｜中國光學短缺延遲$17M出貨</div><span class="BG BG-p">⏳供應鏈</span>
+<div class="IC-d">Q2營收$82.6M，淨虧收窄至$134萬。A&D創紀錄，受JLWS合約 (上限>$600M) 帶動，Q3起貢獻。惟中國光學供應限制致 ~$17M 產品出貨遞延，Q3指引下調至$63-73M，壓縮Q3毛利與EBITDA。消息公布後股價單日跌約25%。<br><span style="color:var(--t3);font-size:9px">Q1'26：$80.2M (+55%)、A&D $55M (+69%)、EPS $0.20 (超預期)</span></div>
+<div class="KR"><div class="K c"><div class="v">$82.6M</div><div class="l">Q2營收</div></div><div class="K r"><div class="v">-$17M</div><div class="l">遞延出貨</div></div><div class="K y"><div class="v">$63-73M</div><div class="l">Q3指引</div></div><div class="K p"><div class="v">$627M</div><div class="l">JLWS上限</div></div><div class="K o"><div class="v">~$1B/年</div><div class="l">雷射武器預算</div></div></div>
+<div class="src">SEC 8-K · 2026/8/6 · Camas, WA</div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>⚡ 核心國防計畫</h3><span class="d">定向能武器 · 感測</span></div>
+<div class="SB"><div class="g2">
+  <div class="IC hl-p"><div class="IC-t">🔴 HELSI-2 — 1百萬瓦高能雷射</div>
+  <div class="IC-d">$171M合約開發1MW高能雷射。預計2026年底完成。2025年國防產品營收重要驅動。</div>
+  <div class="KR"><div class="K p"><div class="v">$171M</div><div class="l">合約值</div></div><div class="K r"><div class="v">1 MW</div><div class="l">目標</div></div><div class="K o"><div class="v">2026底</div><div class="l">完成</div></div></div></div>
+
+  <div class="IC hl-r"><div class="IC-t">🎯 DE M-SHORAD — 50kW雷射武器</div>
+  <div class="IC-d">為美國陸軍定向能機動短程防空計畫交付50kW CBC高能雷射，整合於Stryker裝甲車。Q4完成交付。</div>
+  <div class="KR"><div class="K r"><div class="v">50 kW</div><div class="l">功率</div></div><div class="K b"><div class="v">Stryker</div><div class="l">載具</div></div></div></div>
+</div>
+
+<div class="g3" style="margin-top:10px">
+  <div class="CC hl-c"><div class="cn">🛡️ Golden Dome</div><div class="cd">總統行政令強調非動能飛彈防禦。nLIGHT核心受惠。預計近期新合約。</div></div>
+  <div class="CC hl-b"><div class="cn">🔭 雷射感測 (LRIP)</div><div class="cd">機密感測計畫進入低率初始生產。$50M飛彈感測新合約。</div></div>
+  <div class="CC hl-g"><div class="cn">⚡ 70kW雷射武器</div><div class="cd">全新開發。2026/3 Pacific OSTC展示。反無人機/飛彈。</div></div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>🔬 技術 · 產品 · 分析師</h3></div>
+<div class="SB"><div class="g3">
+  <div class="CC"><div class="cn">⚡ 半導體雷射</div><div class="cd">多功率/波長。國防及工業核心。</div></div>
+  <div class="CC"><div class="cn">🔦 光纖雷射/放大器</div><div class="cd">可程式化。CBC相干光束合成。</div></div>
+  <div class="CC"><div class="cn">🏭 先進製造 (3D列印)</div><div class="cd">金屬積層。退出傳統切割/焊接。</div></div>
+</div>
+<div class="IC" style="margin-top:10px"><div class="IC-t">📈 Strong Buy — 8位分析師</div>
+<div class="IC-d">63% Strong Buy。Roth Capital $74 (自$55上調)。Baird Outperform。2026E $290M、2027E $330M。長期$200M+年營收。負債率0.09。從工業雷射轉型為國防/AI定向能供應商。</div>
+<div class="KR"><div class="K g"><div class="v">$50.56</div><div class="l">平均目標</div></div><div class="K b"><div class="v">$74</div><div class="l">Roth高點</div></div><div class="K o"><div class="v">~12x</div><div class="l">P/S</div></div></div>
+</div></div></div>
+
+<!-- ╔════════════════════════════════════════════╗ -->
+<!-- ║    KTOS — Kratos Defense & Security        ║ -->
+<!-- ╚════════════════════════════════════════════╝ -->
+<div class="DV" id="ktos"><span style="color:var(--yel)">🚀 KTOS</span></div>
+<div class="CH">
+  <h2>KRATOS DEFENSE & SECURITY</h2>
+  <div class="m">NASDAQ: KTOS｜~$64.58｜市值 ~$12.1B</div>
+  <div class="tgs">
+    <span class="T Ty">📈 Q2'26 $458.8M (+30.5%)</span><span class="T Tr">🎯 2026 $1.75-1.81B (再上調)</span><span class="T Tb">🚀 噴射無人機</span><span class="T Tg">📋 積壓 $2.0B</span><span class="T To">🛰️ 管道 $14B+</span><span class="T Tp">🏹 Javelin導引頭</span><span class="T Tc">📡 C5ISR/微波</span>
+  </div>
+</div>
+
+<div class="S"><div class="SH"><h3>📊 Q2 2026 業績</h3><span class="d">2026/8/4</span></div>
+<div class="SB"><div class="IC"><div class="IC-t">🔥 Q2 $458.8M (+30.5%)｜雙率超標｜再上調指引</div><span class="BG BG-n">⚡最新</span>
+<div class="IC-d">Q2營收$458.8M (+30.5% YoY)，有機成長19.1%。Adj EPS $0.21 (預期$0.13，+61.5%)。Adj EBITDA $38.2M。再上調2026全年指引至$1.75-1.81B (有機成長19-23%)。8/6 獲陸軍 DEVCOM Javelin 飛彈次世代導引頭研發合約。2027 目標 3,000 具 Spartan 引擎。股價財報後漲30%。<br><span style="color:var(--t3);font-size:9px">Q1 FY26：$371M (+15.8%)、積壓創紀錄$2.0B</span></div>
+<div class="KR"><div class="K y"><div class="v">$458.8M</div><div class="l">Q2營收</div></div><div class="K r"><div class="v">30.5%</div><div class="l">YoY</div></div><div class="K b"><div class="v">$0.21</div><div class="l">Adj EPS</div></div><div class="K g"><div class="v">$2.0B</div><div class="l">積壓</div></div><div class="K o"><div class="v">$1.75-1.81B</div><div class="l">2026指引(再上調)</div></div></div>
+<div class="src">SEC 8-K · 2026/8/4 · San Diego, CA</div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>🚀 核心業務領域</h3><span class="d">KGS + KUS 雙部門</span></div>
+<div class="SB"><div class="g2">
+  <div class="IC hl-y"><div class="IC-t">🚀 Kratos Unmanned Systems (KUS)</div>
+  <div class="IC-d">噴射動力戰術無人機全球領導者。包含XQ-58 Valkyrie型高速靶機/忠誠僚機、Firejet系列、BQM-177A靶機。為Elroy Air獨家製造Chaparral VTOL貨運無人機。Q4積壓$361.7M，book-to-bill 1.9:1。</div>
+  <div class="KR"><div class="K y"><div class="v">$361.7M</div><div class="l">KUS積壓</div></div><div class="K r"><div class="v">1.9:1</div><div class="l">Q4 B/B</div></div></div></div>
+
+  <div class="IC hl-b"><div class="IC-t">🛰️ Kratos Government Solutions (KGS)</div>
+  <div class="IC-d">衛星地面站虛擬化、C5ISR微波電子、雷達/飛彈導引、定向能、極音速載具及火箭推進系統。Q4營收$276.6M (+22.2%)。積壓$1.212B。Zeus固體火箭發動機已規模化量產。</div>
+  <div class="KR"><div class="K b"><div class="v">$1.212B</div><div class="l">KGS積壓</div></div><div class="K o"><div class="v">22.2%</div><div class="l">Q4成長</div></div></div></div>
+</div>
+
+<div class="g3" style="margin-top:10px">
+  <div class="CC hl-r"><div class="cn">🚀 噴射無人機</div><div class="cd">低成本戰術無人機/靶機/忠誠僚機。世界技術領導者。量產中。</div></div>
+  <div class="CC hl-p"><div class="cn">🔥 極音速/火箭</div><div class="cd">Zeus固體火箭發動機。極音速測試平台。海軍極音速新合約。</div></div>
+  <div class="CC hl-c"><div class="cn">📡 C5ISR/反UAS</div><div class="cd">微波電子、雷達、飛彈導引、$7M反UAS生產合約。</div></div>
+  <div class="CC"><div class="cn">🛰️ 衛星地面站</div><div class="cd">虛擬化地面系統。C2/TT&C軟體。商業+國防。</div></div>
+  <div class="CC"><div class="cn">🇮🇱 Orbit Technologies <span class="T Ty" style="font-size:7px;padding:1px 4px">$356M收購</span></div><div class="cd">以色列衛星行動系統公司。2026/3完成。</div></div>
+  <div class="CC"><div class="cn">🏭 VR/AR訓練系統</div><div class="cd">虛擬及擴增實境軍事訓練。</div></div>
+</div></div></div>
+
+<!-- ╔════════════════════════════════════════════╗ -->
+<!-- ║        AVAV — AeroVironment                ║ -->
+<!-- ╚════════════════════════════════════════════╝ -->
+<div class="DV" id="avav"><span style="color:var(--pnk)">🎯 AVAV</span></div>
+<div class="CH">
+  <h2>AEROVIRONMENT</h2>
+  <div class="m">NASDAQ: AVAV｜~$192.81｜市值 ~$9.72B</div>
+  <div class="tgs">
+    <span class="T Tk">📈 FY26 $1.98B (+141%)</span><span class="T Tr">🎯 Switchblade</span><span class="T Tb">📋 積壓 $2.7B</span><span class="T Tg">🎯 FY27 $2.1-2.2B</span><span class="T To">⚡ LOCUST $400M合約</span><span class="T Tp">🛰️ 太空/電子戰</span><span class="T Ty">📊 Q4 EBITDA 22%</span>
+  </div>
+</div>
+
+<div class="S"><div class="SH"><h3>📊 Q4 / FY2026 全年業績</h3><span class="d">2026/6</span></div>
+<div class="SB"><div class="IC"><div class="IC-t">🔥 Q4創紀錄 $641.6M (+31%)｜FY26 $1.98B (+141%)｜EBITDA 22%</div><span class="BG BG-n">⚡最新</span>
+<div class="IC-d">Q4 FY26營收$641.6M (+31% YoY)，超預期15%。Non-GAAP EPS $1.84 (超預期24%)。Adj EBITDA翻倍至$140M，margin擴至22%。FY26全年$1.98B (+141%)。新訂單$2.7B，B/B 1.4x。FY27指引$2.125-2.225B (~+10%)，Non-GAAP EPS $3.02-3.34。2026/8獲陸軍LOCUST雷射反無人機合約$400M。盤後漲19.3%。</div>
+<div class="KR"><div class="K r"><div class="v">$641.6M</div><div class="l">Q4營收</div></div><div class="K o"><div class="v">$1.98B</div><div class="l">FY26全年</div></div><div class="K g"><div class="v">$2.7B</div><div class="l">積壓</div></div><div class="K b"><div class="v">22%</div><div class="l">EBITDA margin</div></div><div class="K p"><div class="v">$2.1-2.2B</div><div class="l">FY27指引</div></div></div>
+</div></div></div>
+
+<div class="S"><div class="SH"><h3>🎯 核心產品與部門</h3><span class="d">AxS + SCDE</span></div>
+<div class="SB"><div class="g2">
+  <div class="IC hl-r"><div class="IC-t">🎯 Autonomous Systems (AxS)</div>
+  <div class="IC-d">Switchblade 300/600巡飛彈 (烏克蘭戰場驗證)、Puma™/Raven® ISR無人機、JUMP 20-X中型UAS (獲海軍ISR合約)、P550 UAS (陸軍遠程偵察)。LUS合約$990M。新鹽湖城工廠2026底三倍產能。</div>
+  <div class="KR"><div class="K r"><div class="v">$278.7M</div><div class="l">Q3 AxS</div></div><div class="K o"><div class="v">$990M</div><div class="l">LUS合約</div></div></div></div>
+
+  <div class="IC hl-p"><div class="IC-t">🛰️ Space, Cyber & Directed Energy (SCDE)</div>
+  <div class="IC-d">BlueHalo整合：LOCUST雷射武器系統、Titan-SV射頻反制、數位波束成形天線、雷射通訊、太空硬體、HaloCortex OSINT AI平台。$874M IDIQ合約。</div>
+  <div class="KR"><div class="K p"><div class="v">$129.3M</div><div class="l">Q3 SCDE</div></div><div class="K b"><div class="v">$874M</div><div class="l">IDIQ</div></div></div></div>
+</div>
+
+<div class="g3" style="margin-top:10px">
+  <div class="CC hl-r"><div class="cn">💥 Switchblade 300/600</div><div class="cd">巡飛彈/精確打擊。Block 2 + EFP穿甲。烏克蘭大量實戰。全球FMS需求暴增。</div></div>
+  <div class="CC hl-o"><div class="cn">⚡ LOCUST X3 雷射</div><div class="cd">第三代模組化定向能武器。AI賦能反無人機。BlueHalo核心技術。</div></div>
+  <div class="CC hl-b"><div class="cn">🛩️ JUMP 20-X / P550</div><div class="cd">中型UAS。海軍ISR合約。陸軍遠程偵察。與RCAT FANG整合。</div></div>
+  <div class="CC hl-g"><div class="cn">🤝 BlueHalo <span class="T Tg" style="font-size:7px;padding:1px 4px">$3.48B·已整合</span></div><div class="cd">太空、電子戰、定向能。整合完成。</div></div>
+  <div class="CC hl-c"><div class="cn">⚡ LOCUST $400M <span class="T Tc" style="font-size:7px;padding:1px 4px">2026/8</span></div><div class="cd">陸軍LOCUST雷射反無人機系統合約$400M。股價漲9.1%。</div></div>
+  <div class="CC hl-p"><div class="cn">🏗️ ESAero收購 <span class="T Tp" style="font-size:7px;padding:1px 4px">2026</span></div><div class="cd">無人機及先進空中移動平台。</div></div>
+</div></div></div>
+
+<!-- ╔════════════════════════════════════════════╗ -->
+<!-- ║          生態系關係總覽                      ║ -->
+<!-- ╚════════════════════════════════════════════╝ -->
+<div class="DV" id="eco"><span style="color:var(--cyn)">🔗 關係總覽</span></div>
+
+<div class="S"><div class="SH"><h3>🌐 八家公司交叉關係圖</h3></div>
+<div class="SB">
+  <div class="IC">
+    <div class="IC-d" style="font-size:11px;line-height:2.1">
+      <strong style="color:var(--org)">ONDS</strong> ←投資→ <strong style="color:var(--pur)">KOPN</strong>：Ondas為Kopin戰略投資者<br>
+      <strong style="color:var(--org)">ONDS</strong> ←投資→ <strong style="color:var(--grn)">UMAC</strong>：Ondas為UMAC戰略投資者<br>
+      <strong style="color:var(--org)">ONDS</strong> ←$8M→ <strong style="color:var(--blu)">LPTH</strong>：與UMAC共同投資IR光學<br>
+      <strong style="color:var(--grn)">UMAC</strong> ←$8M→ <strong style="color:var(--blu)">LPTH</strong>：與ONDS共同投資IR光學<br>
+      <strong style="color:var(--grn)">UMAC</strong> ←合作→ <strong style="color:var(--pur)">KOPN</strong>：無人機零組件與顯示器整合<br>
+      <strong style="color:var(--red)">RCAT</strong> ←合作→ <strong style="color:var(--pnk)">AVAV</strong>：FANG FPV部署於AV P550 UAS<br>
+      <strong style="color:var(--red)">RCAT</strong> ← 同業 → <strong style="color:var(--org)">ONDS</strong>：同屬國防無人機生態系<br>
+      <strong style="color:var(--cyn)">LASR</strong> → 🛡️ 全生態系：定向能反無人機核心雷射供應商<br>
+      <strong style="color:var(--yel)">KTOS</strong> → 🚀 噴射無人機/靶機/極音速：忠誠僚機與耗損式UAS先驅<br>
+      <strong style="color:var(--pnk)">AVAV</strong> → 🎯 戰術無人機/巡飛彈/定向能：Switchblade + LOCUST + BlueHalo
+    </div>
+  </div>
+
+  <div class="g4" style="margin-top:10px">
+    <div class="CC" style="text-align:center;border-top:3px solid var(--red)"><div class="cn" style="justify-content:center;font-size:10px">🦅 RCAT</div><div class="cd" style="font-size:9px">小型sUAS OEM<br>Black Widow · FANG</div></div>
+    <div class="CC" style="text-align:center;border-top:3px solid var(--org)"><div class="cn" style="justify-content:center;font-size:10px">🏢 ONDS</div><div class="cd" style="font-size:9px">平台整合者<br>收購 · 資本 · 以色列</div></div>
+    <div class="CC" style="text-align:center;border-top:3px solid var(--grn)"><div class="cn" style="justify-content:center;font-size:10px">🔧 UMAC</div><div class="cd" style="font-size:9px">零組件供應<br>NDAA · 美國造</div></div>
+    <div class="CC" style="text-align:center;border-top:3px solid var(--blu)"><div class="cn" style="justify-content:center;font-size:10px">🔭 LPTH</div><div class="cd" style="font-size:9px">IR光學核心<br>BlackDiamond™</div></div>
+    <div class="CC" style="text-align:center;border-top:3px solid var(--pur)"><div class="cn" style="justify-content:center;font-size:10px">🖥️ KOPN</div><div class="cd" style="font-size:9px">顯示器技術<br>MicroLED · HMD</div></div>
+    <div class="CC" style="text-align:center;border-top:3px solid var(--cyn)"><div class="cn" style="justify-content:center;font-size:10px">⚡ LASR</div><div class="cd" style="font-size:9px">定向能武器<br>高能雷射 · 感測</div></div>
+    <div class="CC" style="text-align:center;border-top:3px solid var(--yel)"><div class="cn" style="justify-content:center;font-size:10px">🚀 KTOS</div><div class="cd" style="font-size:9px">噴射無人機<br>極音速 · 衛星</div></div>
+    <div class="CC" style="text-align:center;border-top:3px solid var(--pnk)"><div class="cn" style="justify-content:center;font-size:10px">🎯 AVAV</div><div class="cd" style="font-size:9px">戰術UAS/巡飛彈<br>Switchblade · LOCUST</div></div>
+  </div>
+
+  <div class="IC" style="margin-top:12px">
+    <div class="IC-t">🏗️ 完整無人機國防價值鏈</div>
+    <div class="IC-d" style="font-size:11px;line-height:2">
+      <strong>零組件層</strong>：UMAC (飛控/ESC/馬達) + KOPN (顯示器/HMD) + LPTH (IR相機/光學)<br>
+      <strong>小型sUAS平台</strong>：RCAT (Black Widow/FANG/Edge 130) + ONDS (Optimus/Raider)<br>
+      <strong>戰術UAS/巡飛彈</strong>：AVAV (Switchblade/Puma/JUMP 20-X) — 烏克蘭實戰驗證<br>
+      <strong>噴射/極音速UAS</strong>：KTOS (Firejet/Valkyrie/BQM-177A) — 忠誠僚機/靶機<br>
+      <strong>海上無人系統</strong>：RCAT Blue Ops (USV) + ONDS (USV)<br>
+      <strong>定向能武器</strong>：LASR (50kW-1MW雷射) + AVAV LOCUST X3 (模組化雷射)<br>
+      <strong>軟體/AI層</strong>：Palantir VNav + Apium蜂群 + Lantronix邊緣AI + AV_Halo<br>
+      <strong>資本層</strong>：ONDS (Ondas Capital — 收購/投資整合中樞)
+    </div>
+  </div>
+</div></div>
+
+<div class="ftr">
+  <div class="cr">
+    資料來源：各公司IR、SEC Filing (8-K/10-K/10-Q)、StockTitan、Yahoo Finance、BusinessWire、Motley Fool 公開資訊｜更新至2026年8月12日<br>
+    ⚠️ 僅供資訊參考，不構成投資建議。投資有風險，請自行判斷。
+  </div>
+</div>
+
+</div>
+</body>
+</html>

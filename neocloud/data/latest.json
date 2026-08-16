@@ -1,0 +1,222 @@
+{
+  "meta": {
+    "date": "2026-08-14",
+    "prev_date": "2026-08-13",
+    "sector": "NeoCloud / AI Infrastructure",
+    "note": "NeoCloud 個股戰情儀表板 — 追蹤 GPU 雲端基礎設施新興勢力。股價為 2026-08-12 盤中即時價，prev_price 為前一交易日收盤。CRWV(8/11)、NBIS(8/12)、CIFR(8/4) 均已公布 Q2 2026 財報，IREN 預計 8/27 公布。"
+  },
+
+  "stocks": {
+    "NBIS": {
+      "name": "Nebius Group",
+      "price": 277.68,
+      "prev_price": 255.04,
+      "market_cap_B": 76.1,
+      "sector_tag": "AI Cloud Platform",
+      "description": "前 Yandex 拆分，全棧 AI 基礎設施（GPU 叢集+雲平台+開發工具）。8/12 Q2 財報大超預期，股價單日 +21%"
+    },
+    "CRWV": {
+      "name": "CoreWeave",
+      "price": 105.26,
+      "prev_price": 106.29,
+      "market_cap_B": 58.1,
+      "sector_tag": "GPU Cloud Provider",
+      "description": "專注 GPU 雲端的 AI 基礎設施供應商，Nvidia 最大 NeoCloud 夥伴。8/11 Q2 營收 +112%、訂單簿達 $104B"
+    },
+    "IREN": {
+      "name": "IREN Limited",
+      "price": 44.06,
+      "prev_price": 44.76,
+      "market_cap_B": 15.75,
+      "sector_tag": "AI Cloud Platform",
+      "description": "前 Iris Energy，從 BTC 礦場轉型垂直整合 AI 雲端；已轉盈（TTM 淨利 +$158M）。7 月新簽 $2.8B 合約、ARR 目標升破 $4B"
+    },
+    "CIFR": {
+      "name": "Cipher Digital",
+      "price": 17.86,
+      "prev_price": 16.62,
+      "market_cap_B": 7.41,
+      "sector_tag": "HPC Data Center",
+      "description": "前 Cipher Mining（2026/2 改名），HPC 資料中心開發商。Black Pearl 提前 2 個月通電，管線達 $11.4B"
+    }
+  },
+
+  "contracts": {
+    "_description": "已簽訂合約與訂單簿（$B = 十億美元）",
+    "NBIS": {
+      "total_backlog_B": 46.4,
+      "major_deals": [
+        { "client": "Meta", "value_B": 27.0, "term": "5年", "start": "2027 H1", "type": "AI Cloud 容量", "platform": "Nvidia Vera Rubin" },
+        { "client": "Microsoft", "value_B": 19.4, "term": "多年", "start": "2026", "type": "GPU Compute", "platform": "NJ 資料中心" }
+      ],
+      "pipeline_note": "Q2 2026 為史上最強商業季，單季新簽 4 筆 TCV 逾 $1B 合約；年底 ARR 目標 $7-9B，合約電力升至 5GW（原 >4GW），單 MW 年合約值 $20M+ 並看升至 $40-50M（backlog 為 Q2 前已簽數，未計 Q2 新增）"
+    },
+    "CRWV": {
+      "total_backlog_B": 104.0,
+      "major_deals": [
+        { "client": "Meta", "value_B": 35.0, "term": "至2032", "start": "2026", "type": "AI Cloud 容量", "platform": "多站點（$21B 新約疊加原 $14B）" },
+        { "client": "Anthropic", "value_B": null, "term": "多年", "start": "2026", "type": "Claude AI 推論", "platform": "專屬叢集" },
+        { "client": "Microsoft", "value_B": 10.0, "term": "多年", "start": "已執行", "type": "Azure 溢出", "platform": "GPU Fleet" }
+      ],
+      "pipeline_note": "訂單簿升至 $104B（Q1 約 $66B），且不含 Q3 逾 $25B 新承諾；2026 營收指引 $12.4-13.2B"
+    },
+    "IREN": {
+      "total_backlog_B": 12.5,
+      "major_deals": [
+        { "client": "Microsoft", "value_B": 9.7, "term": "多年", "start": "2026", "type": "AI Cloud 基礎設施", "platform": "Horizon 1-4 (200MW)" },
+        { "client": "多家 AI 開發商", "value_B": 2.8, "term": "多年", "start": "2026", "type": "AI Cloud 服務", "platform": "Perplexity/Figure/Together/Fireworks/Fal/Hume 等" }
+      ],
+      "pipeline_note": "7/20 新簽 $2.8B 多年合約（客戶含 Microsoft、NVIDIA 及多家 AI 開發商），ARR 目標升破 $4B、約 85% 已鎖定；客戶預付款約覆蓋 45% GPU CapEx。8/4 完成 $625M 收購 Mirantis 強化軟體層"
+    },
+    "CIFR": {
+      "total_backlog_B": 9.3,
+      "major_deals": [
+        { "client": "AWS", "value_B": 5.5, "term": "15年", "start": "2026 Q3", "type": "HPC 租賃", "platform": "Black Pearl (300MW)" },
+        { "client": "Fluidstack/Google", "value_B": 3.8, "term": "10年", "start": "2026", "type": "HPC 租賃", "platform": "Barber Lake (168MW)" }
+      ],
+      "pipeline_note": "Black Pearl 提前 2 個月通電、租金已開始入帳；Barber Lake 租戶已部分進駐；新增 Apollo（聖安東尼奧近郊）900MW 選擇權；第三座 Stingray 已完成專案融資、施工照進度推進。總開發管線達 $11.4B"
+    }
+  },
+
+  "data_centers": {
+    "_description": "資料中心建設與電力容量執行進度",
+    "NBIS": {
+      "current_MW": 220,
+      "target_MW_2026": 1000,
+      "contracted_MW": 5000,
+      "gpu_count": null,
+      "locations": ["Finland", "US (NJ Vineland)", "Kansas", "UK", "Israel"],
+      "status": "快速擴建至 1GW，合約電力升至 5GW；Vineland 進度為市場關注焦點",
+      "capex_2026_B": 22.5,
+      "energization_note": "2026 CapEx 目標上調至 $20-25B；年底目標 5GW 合約電力"
+    },
+    "CRWV": {
+      "current_MW": null,
+      "target_MW_2026": 1850,
+      "contracted_MW": null,
+      "gpu_count": "數十萬",
+      "locations": ["US (多州)", "Europe"],
+      "status": "數十座設施遍佈美歐，年底有效電力目標升至 >1.85GW",
+      "capex_2026_B": 37.0,
+      "energization_note": "2026 CapEx 指引 $35-39B；Nvidia GB300/Rubin 平台持續部署"
+    },
+    "IREN": {
+      "current_MW": 810,
+      "target_MW_2026": 2910,
+      "contracted_MW": 2910,
+      "gpu_count": "23K → 140K+",
+      "locations": ["BC (加拿大)", "Childress (TX)", "Sweetwater (TX)"],
+      "status": "Sweetwater 1&2 建設中，總簽約電力約 2.9GW；已併購 Mirantis 補齊軟體層",
+      "capex_2026_B": 6.0,
+      "energization_note": "Horizon 1-4 (200MW) 為 MSFT 加速建設；Sweetwater 逐步通電中"
+    },
+    "CIFR": {
+      "current_MW": 50,
+      "target_MW_2026": 600,
+      "contracted_MW": 900,
+      "gpu_count": null,
+      "locations": ["Black Pearl (TX, 300MW)", "Barber Lake (TX, 168MW)", "Apollo (San Antonio, 900MW 選擇權)", "Stingray (建設中)"],
+      "status": "Black Pearl 8 月提前通電啟用；Barber Lake 部分進駐；Apollo 取得 900MW 選擇權",
+      "capex_2026_B": 3.5,
+      "energization_note": "Black Pearl 較原訂提前 2 個月，2026 Q3 為關鍵通電里程碑"
+    }
+  },
+
+  "financials": {
+    "_description": "關鍵財務指標（TTM = 過去 12 個月）",
+    "NBIS": {
+      "revenue_ttm_M": 1360,
+      "revenue_guidance_2026_B": "3.0-3.4",
+      "revenue_growth_yoy_pct": 454,
+      "ebitda_margin_pct": 41,
+      "fcf_ttm_M": null,
+      "total_debt_B": 2.5,
+      "cash_B": 8.0,
+      "net_debt_B": -5.5,
+      "debt_note": "Q2 營收 $582M（+454% YoY）、調整後 EBITDA $236M；年底 ARR 目標 $7-9B。淨現金充裕，主要靠股權融資"
+    },
+    "CRWV": {
+      "revenue_ttm_M": 7590,
+      "revenue_guidance_2026_B": "12.4-13.2",
+      "revenue_growth_yoy_pct": 112,
+      "ebitda_margin_pct": 62,
+      "fcf_ttm_M": -5270,
+      "total_debt_B": 21.4,
+      "cash_B": 4.0,
+      "net_debt_B": 17.4,
+      "debt_note": "Q2 營收 $2.58B（+112%）、淨損擴大至 $626M；利息支出沉重。$104B 訂單簿提供收入可見度"
+    },
+    "IREN": {
+      "revenue_ttm_M": 757,
+      "revenue_guidance_2026_B": "4.0+ ARR",
+      "revenue_growth_yoy_pct": 105,
+      "ebitda_margin_pct": 85,
+      "fcf_ttm_M": null,
+      "total_debt_B": 4.0,
+      "cash_B": 7.6,
+      "net_debt_B": -3.6,
+      "debt_note": "TTM 已轉盈（淨利 +$158M、EPS $0.54）；現金 $7.6B、客戶預付款覆蓋約 45% GPU CapEx，融資壓力大幅緩解"
+    },
+    "CIFR": {
+      "revenue_ttm_M": 191,
+      "revenue_guidance_2026_B": null,
+      "revenue_growth_yoy_pct": 20,
+      "ebitda_margin_pct": null,
+      "fcf_ttm_M": -500,
+      "total_debt_B": 4.3,
+      "cash_B": 0.6,
+      "net_debt_B": 3.7,
+      "debt_note": "Q2 營收 $24.8M、調整後 EBITDA -$30M；6 月完成 $810M 優先擔保債，第三座資料中心已全額融資"
+    }
+  },
+
+  "credit_risk": {
+    "_description": "私募信貸與債務風險揭露",
+    "sector_risks": [
+      "GPU 租賃費率仍承壓，以 GPU 為擔保品的 DDTL 貸款面臨抵押品縮水風險",
+      "CRWV、CIFR 仍處現金流負值階段，依賴持續融資維持建設；NBIS、IREN 資金狀況已明顯改善",
+      "利率環境若轉鷹，高槓桿公司再融資成本將上升",
+      "客戶集中度風險：多數營收來自少數超大規模客戶（Meta、Microsoft、AWS、Google、Anthropic）",
+      "Meta 傳將自建商用雲、以及 Michael Burry 放空 NBIS/ORCL 等，為市場情緒風險"
+    ],
+    "NBIS": {
+      "risk_level": "低",
+      "leverage_ratio": null,
+      "bond_yield": null,
+      "key_risks": ["CapEx 規模上調至 $20-25B，執行風險高", "Vineland 資料中心進度延遲疑慮", "前 Yandex 拆分的地緣政治風險"],
+      "mitigants": ["淨現金約 $5.5B，財務最健康", "Q2 單季新簽 4 筆 $1B+ 合約，收入能見度提升", "調整後 EBITDA 轉正（41% margin）"]
+    },
+    "CRWV": {
+      "risk_level": "高",
+      "leverage_ratio": 6.9,
+      "bond_yield": 11.5,
+      "key_risks": [
+        "總債務 $21.4B、淨債務 $17.4B",
+        "Q2 淨損擴大至 $626M，利息支出沉重",
+        "CapEx 指引 $35-39B，資金需求龐大",
+        "營收爬升能否追上 $104B 訂單簿為市場疑慮",
+        "GPU 擔保品價值縮水風險"
+      ],
+      "mitigants": ["$104B 訂單簿 + Q3 逾 $25B 新增承諾", "Meta 累計 $35B、Anthropic 長約支撐", "2026 營收指引上調至 $12.4-13.2B"]
+    },
+    "IREN": {
+      "risk_level": "中低",
+      "leverage_ratio": null,
+      "bond_yield": null,
+      "key_risks": ["Sweetwater 大規模建設執行風險", "Meta 傳自建雲的競爭威脅", "股價 Beta 高達 4.3，波動極大"],
+      "mitigants": ["TTM 已轉盈、現金 $7.6B", "ARR 目標 >$4B 且 85% 已鎖定", "客戶預付款覆蓋 45% GPU CapEx，融資壓力低"]
+    },
+    "CIFR": {
+      "risk_level": "中高",
+      "leverage_ratio": null,
+      "bond_yield": null,
+      "key_risks": [
+        "現金僅約 $0.6B，仍高度依賴融資",
+        "Q2 調整後 EBITDA -$30M，HPC 收入剛起步",
+        "營收規模小（TTM $191M），BTC 挖礦占比仍高",
+        "高收益債融資成本較高"
+      ],
+      "mitigants": ["Black Pearl 提前通電、租金開始入帳", "$9.3B 長約已鎖定（AWS 15年 + Google 10年）", "第三座資料中心已全額融資、6 月完成 $810M 優先擔保債", "$11.4B 開發管線"]
+    }
+  }
+}

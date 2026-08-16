@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPO 光子學產業鏈投資地圖</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0d1117;
+  --bg2:       #161b22;
+  --bg3:       #1c2330;
+  --border:    rgba(255,255,255,0.08);
+  --border2:   rgba(255,255,255,0.14);
+  --gold:      #e3a93a;  --gold-bg:   rgba(227,169,58,0.12);  --gold-b:    rgba(227,169,58,0.3);
+  --cyan:      #39d0c8;  --cyan-bg:   rgba(57,208,200,0.1);   --cyan-b:    rgba(57,208,200,0.25);
+  --blue:      #58a6ff;  --blue-bg:   rgba(88,166,255,0.1);   --blue-b:    rgba(88,166,255,0.25);
+  --purple:    #bc8cff;  --purple-bg: rgba(188,140,255,0.1);  --purple-b:  rgba(188,140,255,0.25);
+  --green:     #3fb950;  --green-bg:  rgba(63,185,80,0.1);    --green-b:   rgba(63,185,80,0.25);
+  --red:       #f85149;  --red-bg:    rgba(248,81,73,0.1);    --red-b:     rgba(248,81,73,0.25);
+  --orange:    #f0883e;  --orange-bg: rgba(240,136,62,0.1);   --orange-b:  rgba(240,136,62,0.25);
+  --text:      #e6edf3;  --text-mid:  #8b949e;  --text-dim:  #484f58;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans TC', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 13px; line-height: 1.5; }
+
+.page-header {
+  background: linear-gradient(180deg, #111827 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border2);
+  padding: 28px 24px 20px; text-align: center; position: relative; overflow: hidden;
+}
+.page-header::before {
+  content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 300px;
+  background: radial-gradient(ellipse, rgba(57,208,200,0.07) 0%, transparent 70%); pointer-events: none;
+}
+.header-icon { font-size: 20px; margin-bottom: 6px; }
+.header-title { font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--text); letter-spacing: 0.02em; margin-bottom: 4px; }
+.header-title span { color: var(--cyan); }
+.header-sub { font-size: 12px; color: var(--text-mid); margin-bottom: 14px; font-weight: 300; }
+.header-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 14px; }
+.hpill { font-family: var(--mono); font-size: 10.5px; padding: 3px 10px; border-radius: 20px; border: 1px solid; display: flex; align-items: center; gap: 5px; }
+.hpill-cyan   { color: var(--cyan);   background: var(--cyan-bg);   border-color: var(--cyan-b); }
+.hpill-gold   { color: var(--gold);   background: var(--gold-bg);   border-color: var(--gold-b); }
+.hpill-blue   { color: var(--blue);   background: var(--blue-bg);   border-color: var(--blue-b); }
+.hpill-green  { color: var(--green);  background: var(--green-bg);  border-color: var(--green-b); }
+.hpill-purple { color: var(--purple); background: var(--purple-bg); border-color: var(--purple-b); }
+.updated { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.08em; }
+
+.nav-tabs { display: flex; overflow-x: auto; background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 16px; gap: 2px; scrollbar-width: none; }
+.nav-tabs::-webkit-scrollbar { display: none; }
+.nav-tab { font-family: var(--mono); font-size: 11px; color: var(--text-mid); padding: 10px 14px; white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; letter-spacing: 0.05em; text-decoration: none; }
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active { color: var(--cyan); border-bottom-color: var(--cyan); }
+
+.main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
+
+.section { margin-bottom: 16px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.section.visible { opacity: 1; transform: translateY(0); }
+.section-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+.sh-left { display: flex; align-items: center; gap: 8px; }
+.sh-icon { font-size: 14px; }
+.sh-title { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.05em; }
+.sh-badge { font-family: var(--mono); font-size: 9.5px; padding: 2px 7px; border-radius: 4px; border: 1px solid; letter-spacing: 0.06em; font-weight: 500; }
+.sh-meta { font-family: var(--mono); font-size: 10px; color: var(--text-dim); }
+
+.s-gold   .section-header { background: rgba(227,169,58,0.05); }
+.s-cyan   .section-header { background: rgba(57,208,200,0.05); }
+.s-blue   .section-header { background: rgba(88,166,255,0.05); }
+.s-purple .section-header { background: rgba(188,140,255,0.05); }
+.s-green  .section-header { background: rgba(63,185,80,0.05); }
+.s-orange .section-header { background: rgba(240,136,62,0.05); }
+.s-red    .section-header { background: rgba(248,81,73,0.05); }
+.s-gold   { border-color: rgba(227,169,58,0.2); } .s-gold   .sh-title { color: var(--gold); }
+.s-cyan   { border-color: rgba(57,208,200,0.2); } .s-cyan   .sh-title { color: var(--cyan); }
+.s-blue   { border-color: rgba(88,166,255,0.2); } .s-blue   .sh-title { color: var(--blue); }
+.s-purple { border-color: rgba(188,140,255,0.2); } .s-purple .sh-title { color: var(--purple); }
+.s-green  { border-color: rgba(63,185,80,0.2); }  .s-green  .sh-title { color: var(--green); }
+.s-orange { border-color: rgba(240,136,62,0.2); } .s-orange .sh-title { color: var(--orange); }
+.s-red    { border-color: rgba(248,81,73,0.2); }  .s-red    .sh-title { color: var(--red); }
+
+.section-desc { padding: 10px 16px 8px; font-size: 12px; color: var(--text-mid); line-height: 1.65; border-bottom: 1px solid var(--border); font-weight: 300; }
+
+.card-grid { display: grid; gap: 1px; background: var(--border); }
+.card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+.card { background: var(--bg); padding: 12px 14px; position: relative; transition: background 0.2s; }
+.card:hover { background: var(--bg3); }
+.card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.card-ticker { font-family: var(--mono); font-size: 13px; font-weight: 600; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.05em; border: 1px solid; }
+.t-gold   { color: var(--gold);   background: var(--gold-bg);   border-color: var(--gold-b); }
+.t-cyan   { color: var(--cyan);   background: var(--cyan-bg);   border-color: var(--cyan-b); }
+.t-blue   { color: var(--blue);   background: var(--blue-bg);   border-color: var(--blue-b); }
+.t-purple { color: var(--purple); background: var(--purple-bg); border-color: var(--purple-b); }
+.t-green  { color: var(--green);  background: var(--green-bg);  border-color: var(--green-b); }
+.t-orange { color: var(--orange); background: var(--orange-bg); border-color: var(--orange-b); }
+.t-red    { color: var(--red);    background: var(--red-bg);    border-color: var(--red-b); }
+.t-dim    { color: var(--text-mid); background: rgba(255,255,255,0.04); border-color: var(--border2); }
+.card-role { font-family: var(--mono); font-size: 9px; color: var(--text-dim); letter-spacing: 0.08em; text-align: right; max-width: 90px; line-height: 1.3; }
+.card-name { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.card-desc { font-size: 11px; color: var(--text-mid); line-height: 1.55; font-weight: 300; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
+.ctag { font-family: var(--mono); font-size: 9px; padding: 1px 6px; border-radius: 3px; letter-spacing: 0.05em; border: 1px solid; }
+.ctag-gold   { color: var(--gold);   background: var(--gold-bg);   border-color: var(--gold-b); }
+.ctag-cyan   { color: var(--cyan);   background: var(--cyan-bg);   border-color: var(--cyan-b); }
+.ctag-green  { color: var(--green);  background: var(--green-bg);  border-color: var(--green-b); }
+.ctag-blue   { color: var(--blue);   background: var(--blue-bg);   border-color: var(--blue-b); }
+.ctag-purple { color: var(--purple); background: var(--purple-bg); border-color: var(--purple-b); }
+.ctag-red    { color: var(--red);    background: var(--red-bg);    border-color: var(--red-b); }
+.ctag-orange { color: var(--orange); background: var(--orange-bg); border-color: var(--orange-b); }
+.ctag-dim    { color: var(--text-dim); background: transparent; border-color: var(--border); }
+
+.wide-card { background: var(--bg); padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px; border-bottom: 1px solid var(--border); }
+.wide-card:last-child { border-bottom: none; }
+.wide-left { flex: 1; }
+.wide-ticker-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.wide-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.wide-desc { font-size: 11.5px; color: var(--text-mid); line-height: 1.6; font-weight: 300; }
+.wide-right { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; flex-shrink: 0; }
+.stat-pill { font-family: var(--mono); font-size: 10px; padding: 3px 9px; border-radius: 20px; border: 1px solid; white-space: nowrap; }
+
+/* ─── SUMMARY ─── */
+.summary-section { border: 1px solid rgba(57,208,200,0.3); border-radius: 8px; overflow: hidden; margin-bottom: 16px; opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.summary-section.visible { opacity: 1; transform: translateY(0); }
+.summary-header { background: linear-gradient(135deg, rgba(57,208,200,0.12), rgba(88,166,255,0.08)); padding: 14px 16px; border-bottom: 1px solid rgba(57,208,200,0.2); display: flex; align-items: center; justify-content: space-between; }
+.sum-title { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--cyan); letter-spacing: 0.06em; }
+.sum-sub { font-size: 11px; color: var(--text-mid); font-weight: 300; margin-top: 2px; }
+.sum-count { font-family: var(--mono); font-size: 28px; font-weight: 600; color: var(--cyan); letter-spacing: -0.02em; }
+.sum-body { padding: 16px; }
+.sum-row { display: flex; align-items: center; gap: 14px; margin-bottom: 11px; padding-bottom: 11px; border-bottom: 1px solid var(--border); }
+.sum-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+.sum-layer-label { font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: 0.05em; min-width: 152px; line-height: 1.5; }
+.sum-layer-label .lnum { font-size: 8.5px; opacity: 0.6; display: block; margin-bottom: 1px; letter-spacing: 0.08em; }
+.sum-layer-label .lname { font-size: 11px; font-weight: 600; display: block; }
+
+.sum-tickers { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; }
+.sum-tk { font-family: var(--mono); font-size: 11.5px; font-weight: 600; padding: 4px 12px; border-radius: 4px; border: 1px solid; letter-spacing: 0.06em; cursor: default; position: relative; transition: filter 0.2s; }
+.sum-tk:hover { filter: brightness(1.3); }
+.sum-tk.c-gold   { color: var(--gold);   background: var(--gold-bg);   border-color: var(--gold-b); }
+.sum-tk.c-cyan   { color: var(--cyan);   background: var(--cyan-bg);   border-color: var(--cyan-b); }
+.sum-tk.c-blue   { color: var(--blue);   background: var(--blue-bg);   border-color: var(--blue-b); }
+.sum-tk.c-purple { color: var(--purple); background: var(--purple-bg); border-color: var(--purple-b); }
+.sum-tk.c-green  { color: var(--green);  background: var(--green-bg);  border-color: var(--green-b); }
+.sum-tk.c-red    { color: var(--red);    background: var(--red-bg);    border-color: var(--red-b); }
+.sum-tk.c-orange { color: var(--orange); background: var(--orange-bg); border-color: var(--orange-b); }
+.sum-tk .tooltip { display: none; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1c2330; border: 1px solid var(--border2); border-radius: 4px; padding: 5px 9px; font-size: 10px; font-weight: 400; color: var(--text-mid); white-space: nowrap; pointer-events: none; z-index: 10; letter-spacing: 0.02em; }
+.sum-tk:hover .tooltip { display: block; }
+
+.footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.06em; }
+.footer span { color: var(--text-mid); margin: 0 8px; }
+
+@media (max-width: 700px) {
+  .card-grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .card-grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .hpill { font-size: 9.5px; }
+  .sum-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .sum-layer-label { min-width: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-icon">⬡</div>
+  <div class="header-title">CPO 光子學 <span>產業鏈投資地圖</span></div>
+  <div class="header-sub">Serenity Research 研究框架 · 從 InP 磷化銦基板到光纖基板 · 完整 12 層解構</div>
+  <div class="header-pills">
+    <span class="hpill hpill-cyan">⬡ 12 層產業鏈</span>
+    <span class="hpill hpill-gold">★ 13 檔核心美股</span>
+    <span class="hpill hpill-blue">◎ CPO / 1.6T 主題</span>
+    <span class="hpill hpill-green">↑ 2026 供給瓶頸確定</span>
+    <span class="hpill hpill-purple">⊕ Serenity 高信念持股</span>
+  </div>
+  <div class="updated">資料來源：Serenity Research · 僅供研究參考，不構成投資建議</div>
+</div>
+
+<nav class="nav-tabs">
+  <a class="nav-tab active" href="#summary">★ 核心清單</a>
+  <a class="nav-tab" href="#raw">L1–2 原材料</a>
+  <a class="nav-tab" href="#substrate">L3–4 基板／代工</a>
+  <a class="nav-tab" href="#foundry">L5–6 矽光／EDA</a>
+  <a class="nav-tab" href="#laser">L7–8 雷射／DSP</a>
+  <a class="nav-tab" href="#test">L9 測試燒機</a>
+  <a class="nav-tab" href="#assembly">L10–12 封裝／光纖</a>
+</nav>
+
+<div class="main">
+
+<!-- ─── SUMMARY ─── -->
+<div id="summary" class="summary-section">
+  <div class="summary-header">
+    <div>
+      <div class="sum-title">★ 核心美股清單 · Core US Equities</div>
+      <div class="sum-sub">跨 CPO 光子學完整產業鏈 · 滑鼠移至標的可查看說明</div>
+    </div>
+    <div style="text-align:right">
+      <div class="sum-count">13</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--text-dim);letter-spacing:0.1em">檔核心持股</div>
+    </div>
+  </div>
+  <div class="sum-body">
+    <div class="sum-row">
+      <div class="sum-layer-label" style="color:var(--gold)">
+        <span class="lnum">L01 · 底層原材料</span>
+        <span class="lname">InP 磷化銦基板</span>
+      </div>
+      <div class="sum-tickers">
+        <span class="sum-tk c-gold">AXTI<span class="tooltip">全球 InP 供應鏈 40% 壟斷 · 5 倍以上翻倍股</span></span>
+      </div>
+    </div>
+    <div class="sum-row">
+      <div class="sum-layer-label" style="color:var(--cyan)">
+        <span class="lnum">L05 · 矽光晶圓代工</span>
+        <span class="lname">Silicon Photonics Foundry</span>
+      </div>
+      <div class="sum-tickers">
+        <span class="sum-tk c-cyan">TSEM<span class="tooltip">Nvidia 官宣合作 1.6T · 70% 產能預訂至 2028 年</span></span>
+        <span class="sum-tk c-cyan">GFS<span class="tooltip">收購 AMF 擴張產能 · CPO 生態公開可投排名第一</span></span>
+      </div>
+    </div>
+    <div class="sum-row">
+      <div class="sum-layer-label" style="color:var(--blue)">
+        <span class="lnum">L06 · 電子設計自動化</span>
+        <span class="lname">EDA 工具鏈</span>
+      </div>
+      <div class="sum-tickers">
+        <span class="sum-tk c-blue">CDNS<span class="tooltip">CPO 生態頂級 EDA 平台 · 市值 850 億美元</span></span>
+        <span class="sum-tk c-blue">SNPS<span class="tooltip">光子學電磁場數值仿真優勢 · 收購 Ansys</span></span>
+      </div>
+    </div>
+    <div class="sum-row">
+      <div class="sum-layer-label" style="color:var(--red)">
+        <span class="lnum">L07 · 雷射二極體</span>
+        <span class="lname">2026 最確定供給瓶頸</span>
+      </div>
+      <div class="sum-tickers">
+        <span class="sum-tk c-red">LITE<span class="tooltip">EML 全球市占 50–60% · 2 倍以上翻倍股</span></span>
+        <span class="sum-tk c-red">AAOI<span class="tooltip">最重要持股 · 雷射瓶頸直接受益 · 5 倍翻倍股</span></span>
+        <span class="sum-tk c-red">COHR<span class="tooltip">EML／CW 雷射雙寡頭另一半</span></span>
+      </div>
+    </div>
+    <div class="sum-row">
+      <div class="sum-layer-label" style="color:var(--purple)">
+        <span class="lnum">L08 · 光學 DSP 晶片</span>
+        <span class="lname">PAM4 調變解調</span>
+      </div>
+      <div class="sum-tickers">
+        <span class="sum-tk c-purple">MRVL<span class="tooltip">小型版 Broadcom · 微軟 Maia 晶片為重大催化劑</span></span>
+      </div>
+    </div>
+    <div class="sum-row">
+      <div class="sum-layer-label" style="color:var(--green)">
+        <span class="lnum">L09 · 測試與燒機</span>
+        <span class="lname">晶圓級燒機篩選</span>
+      </div>
+      <div class="sum-tickers">
+        <span class="sum-tk c-green">AEHR<span class="tooltip">CPO 晶圓級燒機壟斷 · 大量加碼 · 2 倍以上翻倍股</span></span>
+      </div>
+    </div>
+    <div class="sum-row">
+      <div class="sum-layer-label" style="color:var(--blue)">
+        <span class="lnum">L10 · 光模組組裝</span>
+        <span class="lname">精密製造 EMS</span>
+      </div>
+      <div class="sum-tickers">
+        <span class="sum-tk c-blue">FN<span class="tooltip">全球光模組 EMS 龍頭 · Nvidia 佔收入 35%</span></span>
+      </div>
+    </div>
+    <div class="sum-row">
+      <div class="sum-layer-label" style="color:var(--orange)">
+        <span class="lnum">L11 · 先進封裝 OSAT</span>
+        <span class="lname">覆晶接合／3D 整合</span>
+      </div>
+      <div class="sum-tickers">
+        <span class="sum-tk c-orange">ASX<span class="tooltip">全球 OSAT 第一 · 市值 633 億美元</span></span>
+      </div>
+    </div>
+    <div class="sum-row">
+      <div class="sum-layer-label" style="color:var(--cyan)">
+        <span class="lnum">L12 · 光纖與玻璃基板</span>
+        <span class="lname">資料中心光互連</span>
+      </div>
+      <div class="sum-tickers">
+        <span class="sum-tk c-cyan">GLW<span class="tooltip">Meta 60 億美元光纖合約 · 玻璃核心基板龍頭</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── L1 ─── -->
+<div id="raw" class="section s-gold">
+  <div class="section-header">
+    <div class="sh-left">
+      <span class="sh-icon">🔶</span>
+      <span class="sh-title">L01 · 底層原材料 — InP 磷化銦基板</span>
+      <span class="sh-badge" style="color:var(--gold);background:var(--gold-bg);border-color:var(--gold-b)">供給瓶頸層</span>
+    </div>
+    <span class="sh-meta">光子學的霍姆茲海峽</span>
+  </div>
+  <div class="section-desc">
+    光通訊雷射（DFB、EML、CW laser）幾乎全部依賴 InP（磷化銦）基板，全球產能極度緊張。AXTI 掌控全球 40% 供應鏈。即便未來面臨中國出口管制，透過美國本土供應鏈重建仍極具投資價值。
+  </div>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-gold">AXTI</span><span class="card-role">核心美股<br>Serenity 5x+</span></div>
+      <div class="card-name">AXT Inc.</div>
+      <div class="card-desc">掌控全球 InP 供應鏈 40%，Serenity 代表性翻倍股。即便面臨中國出口管制，美國本土供應鏈重建依然極具估值空間。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-gold">InP 壟斷</span>
+        <span class="ctag ctag-cyan">5 倍以上翻倍</span>
+        <span class="ctag ctag-green">供應鏈重建</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-dim">VNP</span><span class="card-role">非美股<br>TSX 上市</span></div>
+      <div class="card-name">5N Plus（TSX）</div>
+      <div class="card-desc">Ga／In／As 原料提取商，InP 上游原材料供應商。由 Serenity 提及為 AXTI 上游的潛在投資標的。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-dim">TSX 上市</span>
+        <span class="ctag ctag-dim">上游原料</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── L2 ─── -->
+<div class="section s-orange">
+  <div class="section-header">
+    <div class="sh-left">
+      <span class="sh-icon">⚗️</span>
+      <span class="sh-title">L02 · InP 上游原料供應與處理</span>
+      <span class="sh-badge" style="color:var(--orange);background:var(--orange-bg);border-color:var(--orange-b)">極度稀缺</span>
+    </div>
+    <span class="sh-meta">原材料中的原材料</span>
+  </div>
+  <div class="section-desc">
+    InP 反應爐需要 pBN 坩堝、多晶 InP、三氧化二硼（B₂O₃）等高純度原材料——比 InP 基板本身還要稀缺。西方現在需要儘快建立 AXTI 以外的獨立供應鏈。若找到一家「獨立壟斷」廠商，估值潛力極高。
+  </div>
+  <div class="wide-card">
+    <div class="wide-left">
+      <div class="wide-ticker-row">
+        <span class="card-ticker t-dim" style="font-size:11px">美股無純玩標的</span>
+        <span class="ctag ctag-dim">私有企業／日股為主</span>
+      </div>
+      <div class="wide-desc">此層標的包括 Momentive（pBN 坩堝）、信越化學、Morgan Advanced Materials 等，均為私有企業或日本上市公司。COHR 作為最終使用者之一具有間接曝險，但並非直接純玩標的。Serenity 認為這是西方供應鏈最大的未填補缺口。</div>
+    </div>
+    <div class="wide-right">
+      <span class="stat-pill" style="color:var(--orange);border-color:var(--orange-b);background:var(--orange-bg)">COHR 間接曝險</span>
+      <span class="stat-pill" style="color:var(--text-dim);border-color:var(--border)">私有企業為主</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── L3 ─── -->
+<div id="substrate" class="section s-purple">
+  <div class="section-header">
+    <div class="sh-left">
+      <span class="sh-icon">💎</span>
+      <span class="sh-title">L03 · 工程基板 — Photonic-SOI</span>
+      <span class="sh-badge" style="color:var(--purple);background:var(--purple-bg);border-color:var(--purple-b)">壟斷 · 市場錯誤定價</span>
+    </div>
+    <span class="sh-meta">Soitec 近乎全球壟斷</span>
+  </div>
+  <div class="section-desc">
+    矽光 PIC 必須建立在特殊 SOI（絕緣層上矽）基板上，才能實現低損耗波導與電光整合。全球幾乎是 Soitec 的壟斷局面，但市場仍以「RF-SOI 下行週期股」定價——Serenity 認為這是整個 CPO 生態最大的市場錯誤定價。
+  </div>
+  <div class="wide-card">
+    <div class="wide-left">
+      <div class="wide-ticker-row">
+        <span class="card-ticker t-dim">SOI.PA</span>
+        <span class="ctag ctag-dim">巴黎交易所</span>
+        <span class="ctag ctag-purple">Serenity 重倉 Top 2</span>
+      </div>
+      <div class="wide-name">Soitec（法股）</div>
+      <div class="wide-desc">矽光 PIC 基板全球壟斷者。市場以 RF-SOI 下行週期定價，但 Serenity 認為矽光／CPO 的成長完全未被計入。Serenity 稱其為 CPO 生態中「少數幾家同時供應矽光子與 CPO 關鍵零組件的廠商之一」，為其 Top 2 CPO 持股之一。</div>
+    </div>
+    <div class="wide-right">
+      <span class="stat-pill" style="color:var(--purple);border-color:var(--purple-b);background:var(--purple-bg)">Serenity Top 2</span>
+      <span class="stat-pill" style="color:var(--text-dim);border-color:var(--border)">無美股替代標的</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── L4 ─── -->
+<div class="section s-blue">
+  <div class="section-header">
+    <div class="sh-left">
+      <span class="sh-icon">🏭</span>
+      <span class="sh-title">L04 · 化合物半導體晶圓代工（GaAs／InP）</span>
+      <span class="sh-badge" style="color:var(--blue);background:var(--blue-bg);border-color:var(--blue-b)">雙寡頭</span>
+    </div>
+    <span class="sh-meta">穩懋半導體主導 · AVGO 持股 5%</span>
+  </div>
+  <div class="section-desc">
+    無廠雷射廠商需委外化合物半導體晶圓代工。穩懋半導體（台股 3105.TWO）為 InP＋GaAs 雙寡頭之一，AVGO 持有約 5% 作為戰略佈局。低軌衛星（Starlink）、CW 雷射、人形機器人眼部／雷達光源都將流經此層。Serenity：「穩懋必勝。」
+  </div>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-dim">3105.TWO</span><span class="card-role">台股<br>無美股 ADR</span></div>
+      <div class="card-name">穩懋半導體</div>
+      <div class="card-desc">InP／GaAs 雙寡頭之一。Serenity 明確做多，認為管理層刻意壓低 2027 年預估本益比，未來估值將顯得極為便宜。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-blue">InP+GaAs 雙寡頭</span>
+        <span class="ctag ctag-dim">台股</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-dim">AVGO</span><span class="card-role">次要<br>間接曝險</span></div>
+      <div class="card-name">Broadcom</div>
+      <div class="card-desc">持有穩懋半導體約 5% 股權作為戰略佈局，同時為光學 DSP 雙寡頭之一。體量過大，Serenity 更多將其視為錨定客戶（anchor customer）而非主要投資標的。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-dim">錨定客戶</span>
+        <span class="ctag ctag-dim">DSP 雙寡頭</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── L5 ─── -->
+<div id="foundry" class="section s-cyan">
+  <div class="section-header">
+    <div class="sh-left">
+      <span class="sh-icon">⚙️</span>
+      <span class="sh-title">L05 · 矽光晶圓代工（Silicon Photonics Foundry）</span>
+      <span class="sh-badge" style="color:var(--cyan);background:var(--cyan-bg);border-color:var(--cyan-b)">核心</span>
+      <span class="sh-badge" style="color:var(--gold);background:var(--gold-bg);border-color:var(--gold-b)">大幅超越預期</span>
+    </div>
+    <span class="sh-meta">70% 產能已預訂至 2028 年</span>
+  </div>
+  <div class="section-desc">
+    CPO 模組的 PIC 晶片須在 300mm CMOS 相容矽光製程上量產。全球具備規模的僅三家：TSEM（Nvidia 合作夥伴）、GFS（收購 AMF 後擴張）、台積電 COUPE（內部不對外）。TSEM 已有 70% 以上產能預訂至 2028 年，但「矽光子根本尚未放量」——Serenity 預計將大幅超越所有市場預期。
+  </div>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-cyan">TSEM</span><span class="card-role">核心美股<br>Serenity Top 2</span></div>
+      <div class="card-name">Tower Semiconductor</div>
+      <div class="card-desc">Nvidia 於 2026 年 2 月官宣合作 1.6T 矽光擴產。70% 以上產能預訂至 2028 年，但矽光子尚未放量。預計大幅超越獲利預測，因極端光子擴產加上產能報價調漲均未納入現有模型。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-cyan">Nvidia 合作夥伴</span>
+        <span class="ctag ctag-gold">Serenity Top 2</span>
+        <span class="ctag ctag-green">超越預期確定</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-cyan">GFS</span><span class="card-role">核心美股<br>CPO 生態第一</span></div>
+      <div class="card-name">GlobalFoundries</div>
+      <div class="card-desc">Serenity CPO 生態公開可投名單排名第一（市值 305 億美元）。2025 年 11 月收購 AMF（新加坡），大幅擴張矽光產能，直接與 TSEM 競爭。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-cyan">CPO 生態第一</span>
+        <span class="ctag ctag-blue">收購 AMF</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── L6 ─── -->
+<div class="section s-blue">
+  <div class="section-header">
+    <div class="sh-left">
+      <span class="sh-icon">📐</span>
+      <span class="sh-title">L06 · EDA — 電子光子設計自動化</span>
+      <span class="sh-badge" style="color:var(--blue);background:var(--blue-bg);border-color:var(--blue-b)">基礎建設型投資</span>
+    </div>
+    <span class="sh-meta">CDNS 850 億美元 · SNPS 840 億美元</span>
+  </div>
+  <div class="section-desc">
+    所有 PIC／矽光晶片都必須透過 EDA 工具完成設計、驗證與流片，是典型的基礎建設型投資邏輯。SNPS 收購 Ansys 後，在光子學電磁場數值仿真（FDTD）上具備獨特優勢，設計門檻極高。
+  </div>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-blue">CDNS</span><span class="card-role">核心美股<br>850 億美元</span></div>
+      <div class="card-name">Cadence Design Systems</div>
+      <div class="card-desc">GFS CPO 生態頂級 EDA 平台，列於 Serenity CPO 生態可投名單。所有矽光 PIC 設計均需通過其工具鏈完成流片驗證。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-blue">PIC EDA</span>
+        <span class="ctag ctag-dim">基礎建設型投資</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-blue">SNPS</span><span class="card-role">核心美股<br>840 億美元</span></div>
+      <div class="card-name">Synopsys</div>
+      <div class="card-desc">收購 Ansys 後具備多重物理仿真能力，在光子學電磁場數值仿真（FDTD）上具備獨特優勢。是所有下世代光子晶片設計的必備工具。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-blue">FDTD 電磁仿真</span>
+        <span class="ctag ctag-blue">收購 Ansys</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── L7 ─── -->
+<div id="laser" class="section s-red">
+  <div class="section-header">
+    <div class="sh-left">
+      <span class="sh-icon">🔴</span>
+      <span class="sh-title">L07 · 雷射二極體（Laser Diodes）</span>
+      <span class="sh-badge" style="color:var(--red);background:var(--red-bg);border-color:var(--red-b)">2026 最確定供給瓶頸</span>
+    </div>
+    <span class="sh-meta">1.6T 光模組的心臟</span>
+  </div>
+  <div class="section-desc">
+    1.6T 光模組的「心臟」。沒有雷射，光通訊就是空話。Serenity 認為這是 2026 年最確定的供給瓶頸——Nvidia 不在乎誰製造雷射，只在乎供應量是否充足。LITE 佔全球 EML 市占 50–60%，AAOI 為最重要持股之一。
+  </div>
+  <div class="card-grid card-grid-3">
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-red">LITE</span><span class="card-role">核心美股<br>2 倍以上翻倍</span></div>
+      <div class="card-name">Lumentum</div>
+      <div class="card-desc">EML 全球市占 50–60% 真正龍頭。1.6T LRO 收發模組核心供應商。Serenity 核心持股，2 倍以上翻倍股。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-gold">EML 50–60% 市占</span>
+        <span class="ctag ctag-red">2 倍以上翻倍</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-red">AAOI</span><span class="card-role">核心美股<br>最重持股 5x</span></div>
+      <div class="card-name">Applied Optoelectronics</div>
+      <div class="card-desc">雷射供給瓶頸直接受益標的，Serenity 最重要持股之一。評語：「光子學雷射瓶頸，投資論點正在即時兌現」——邊寫論點邊看它發生。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-gold">最重要持股</span>
+        <span class="ctag ctag-red">5 倍翻倍</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-red">COHR</span><span class="card-role">核心美股<br>雙寡頭</span></div>
+      <div class="card-name">Coherent</div>
+      <div class="card-desc">EML／CW 雷射雙寡頭另一半。Serenity：「Nvidia 不在乎是 LITE 還是 COHR 製造雷射，只在乎供應量夠不夠。」</div>
+      <div class="card-tags">
+        <span class="ctag ctag-red">EML 雙寡頭</span>
+        <span class="ctag ctag-dim">CW 雷射</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── L8 ─── -->
+<div class="section s-purple">
+  <div class="section-header">
+    <div class="sh-left">
+      <span class="sh-icon">⚡</span>
+      <span class="sh-title">L08 · 光學 DSP 晶片</span>
+      <span class="sh-badge" style="color:var(--purple);background:var(--purple-bg);border-color:var(--purple-b)">雙寡頭</span>
+    </div>
+    <span class="sh-meta">PAM4 調變 · FEC 前向糾錯 · 400G／800G／1.6T</span>
+  </div>
+  <div class="section-desc">
+    光信號轉電信號後需 DSP 晶片執行 PAM4 調變解調、FEC 前向糾錯。Broadcom 與 Marvell 為全球雙寡頭。MRVL 的微軟 Maia 定制晶片放量，是 Serenity 認為最重大的潛在催化劑。
+  </div>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-purple">MRVL</span><span class="card-role">核心美股<br>微軟 Maia 催化</span></div>
+      <div class="card-name">Marvell Technology</div>
+      <div class="card-desc">Serenity 稱之為「小型版 Broadcom」，光學 DSP 雙寡頭之一。微軟 Maia 定制晶片放量被視為重大催化劑，超越市場預期的可能性極高。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-purple">小型版 Broadcom</span>
+        <span class="ctag ctag-blue">微軟 Maia 催化</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-dim">AVGO</span><span class="card-role">次要<br>體量過大</span></div>
+      <div class="card-name">Broadcom</div>
+      <div class="card-desc">DSP 雙寡頭另一半，同時持有穩懋半導體 5% 股權。Serenity 認為體量太大，更多作為錨定客戶評估，非主要推薦投資標的。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-dim">錨定客戶</span>
+        <span class="ctag ctag-dim">持股穩懋</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── L9 ─── -->
+<div id="test" class="section s-green">
+  <div class="section-header">
+    <div class="sh-left">
+      <span class="sh-icon">🔬</span>
+      <span class="sh-title">L09 · 測試與燒機（Test &amp; Burn-in）</span>
+      <span class="sh-badge" style="color:var(--green);background:var(--green-bg);border-color:var(--green-b)">高毛利利基</span>
+    </div>
+    <span class="sh-meta">晶圓級燒機 · 可靠性篩選</span>
+  </div>
+  <div class="section-desc">
+    矽光／CPO 高功率元件需要晶圓級燒機（WLBI）篩選，否則可靠性不合格。AEHR 的 CPO 燒機業務與 TSEM 70% 產能預訂直接連動——預訂 TSEM 產能的客戶必須使用 AEHR 進行可靠性篩選，形成強制性需求鏈。
+  </div>
+  <div class="card-grid card-grid-4">
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-green">AEHR</span><span class="card-role">核心美股<br>大量加碼</span></div>
+      <div class="card-name">Aehr Test Systems</div>
+      <div class="card-desc">CPO 燒機具壟斷性地位，2 倍以上翻倍股。與 TSEM 70% 產能預訂直接綁定，形成強制性需求。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-green">晶圓燒機壟斷</span>
+        <span class="ctag ctag-gold">2 倍以上翻倍</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-dim">TER</span><span class="card-role">次要</span></div>
+      <div class="card-name">Teradyne</div>
+      <div class="card-desc">Photon 100 矽光測試平台，2026 年 3 月發布，目前少數直接針對矽光測試的大型設備商。</div>
+      <div class="card-tags"><span class="ctag ctag-dim">Photon 100</span></div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-dim">KEYS</span><span class="card-role">次要</span></div>
+      <div class="card-name">Keysight</div>
+      <div class="card-desc">224G 訊號完整性測試龍頭，在高速光訊號量測領域具備領先地位。</div>
+      <div class="card-tags"><span class="ctag ctag-dim">224G 測試</span></div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-dim">ONTO</span><span class="card-role">次要<br>雙重曝險</span></div>
+      <div class="card-name">Onto Innovation</div>
+      <div class="card-desc">玻璃基板量產光學量測主要合作夥伴（LIDE 技術配套），同時具備矽光測試曝險——玻璃基板與矽光雙重曝險。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-dim">玻璃基板量測</span>
+        <span class="ctag ctag-dim">矽光雙重曝險</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── L10 ─── -->
+<div id="assembly" class="section s-blue">
+  <div class="section-header">
+    <div class="sh-left">
+      <span class="sh-icon">📦</span>
+      <span class="sh-title">L10 · 光模組組裝 &amp; 精密製造</span>
+      <span class="sh-badge" style="color:var(--blue);background:var(--blue-bg);border-color:var(--blue-b)">EMS 龍頭</span>
+    </div>
+    <span class="sh-meta">Nvidia 佔 Fabrinet 收入 35%</span>
+  </div>
+  <div class="section-desc">
+    雷射晶粒（die）、PIC 晶片、光纖陣列（FAU）、電路板全部在此層整合封裝成成品光模組，是勞力密集與技術密集的雙重門檻。Fabrinet 高度綁定 Nvidia 供應鏈，Nvidia 佔其收入 35%。
+  </div>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-blue">FN</span><span class="card-role">核心美股<br>EMS 龍頭</span></div>
+      <div class="card-name">Fabrinet</div>
+      <div class="card-desc">全球光模組 EMS 龍頭，Nvidia 佔收入 35%，高度綁定 AI 基礎建設擴張週期。精密製造門檻極高，客戶包含 LITE、COHR 等主要雷射廠商。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-blue">Nvidia 佔比 35%</span>
+        <span class="ctag ctag-blue">EMS 龍頭</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-dim">6451.TW</span><span class="card-role">次要<br>台股</span></div>
+      <div class="card-name">訊芯科技（台股）</div>
+      <div class="card-desc">鴻海旗下光學封裝子公司，Serenity 大量加碼。估值極低，等同免費獲得鴻海的 CPO 組裝業務，預估本益比被嚴重低估。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-dim">鴻海子公司</span>
+        <span class="ctag ctag-dim">台股</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── L11 ─── -->
+<div class="section s-orange">
+  <div class="section-header">
+    <div class="sh-left">
+      <span class="sh-icon">🔩</span>
+      <span class="sh-title">L11 · 先進封裝（OSAT）</span>
+      <span class="sh-badge" style="color:var(--orange);background:var(--orange-bg);border-color:var(--orange-b)">全球第一</span>
+    </div>
+    <span class="sh-meta">覆晶接合 · 2.5D／3D 整合</span>
+  </div>
+  <div class="section-desc">
+    CPO 模組的雷射晶粒接合（die bonding）、2.5D／3D 整合、光纖接合（fiber attach）必須在 OSAT 完成，是光子學封裝技術門檻最高的一環。日月光半導體為全球 OSAT 第一，是 CPO 封裝生態的核心基礎設施。
+  </div>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-orange">ASX</span><span class="card-role">核心美股<br>633 億美元</span></div>
+      <div class="card-name">日月光半導體</div>
+      <div class="card-desc">全球 OSAT 第一，列於 Serenity CPO 生態名單（市值 633 億美元）。CPO 封裝技術門檻的最終把關者——光纖接合精度達微米等級。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-gold">全球 OSAT 第一</span>
+        <span class="ctag ctag-orange">光纖封裝</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-dim">ATEYY</span><span class="card-role">次要<br>1,304 億美元</span></div>
+      <div class="card-name">日月光投控（ATEYY）</div>
+      <div class="card-desc">日月光集團另一上市實體，同為 OSAT 生態。市值 1,304 億美元，封裝業務與 ASX 高度重疊，是 CPO 封裝生態的另一投資切入方式。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-dim">OSAT 生態</span>
+        <span class="ctag ctag-dim">日月光集團</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── L12 ─── -->
+<div class="section s-cyan">
+  <div class="section-header">
+    <div class="sh-left">
+      <span class="sh-icon">🌐</span>
+      <span class="sh-title">L12 · 光纖 &amp; 玻璃核心基板</span>
+      <span class="sh-badge" style="color:var(--cyan);background:var(--cyan-bg);border-color:var(--cyan-b)">技術藍圖加速中</span>
+    </div>
+    <span class="sh-meta">Meta 60 億美元光纖合約 · 玻璃核心基板突破</span>
+  </div>
+  <div class="section-desc">
+    資料中心之間的光互連，以及最新的玻璃核心基板（glass core substrate）。康寧取得 Meta 60 億美元光纖合約為里程碑事件。Serenity：「玻璃基板技術藍圖正在像 CPO 一樣加速推進。」Onto Innovation 為玻璃基板量產光學量測的主要合作夥伴，LPKK（日股）持有 LIDE 雷射誘導深度蝕刻技術，已有 80% 以上客戶驗證份額。
+  </div>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-cyan">GLW</span><span class="card-role">核心美股<br>1,412 億美元</span></div>
+      <div class="card-name">康寧（Corning）</div>
+      <div class="card-desc">Meta 60 億美元光纖合約為里程碑事件，列於 Serenity CPO 生態名單（市值 1,412 億美元）。同時是玻璃核心基板賽道的傳統強者，面臨 LPKK LIDE 技術的競爭挑戰。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-cyan">Meta 60 億合約</span>
+        <span class="ctag ctag-cyan">光纖龍頭</span>
+        <span class="ctag ctag-dim">玻璃核心基板</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-top"><span class="card-ticker t-dim">ONTO</span><span class="card-role">次要<br>雙重曝險</span></div>
+      <div class="card-name">Onto Innovation</div>
+      <div class="card-desc">玻璃基板量產光學量測主要合作夥伴（LIDE 技術配套）。同時具備矽光測試曝險，在 L9 與 L12 均有布局——玻璃基板與矽光雙重曝險。</div>
+      <div class="card-tags">
+        <span class="ctag ctag-dim">LIDE 光學量測</span>
+        <span class="ctag ctag-dim">矽光測試</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  <span>L1–2 原材料</span>
+  <span>L3–4 基板</span>
+  <span>L5–6 矽光／EDA</span>
+  <span>L7 雷射</span>
+  <span>L8 DSP</span>
+  <span>L9 測試</span>
+  <span>L10–12 封裝／光纖</span>
+  <br><br>
+  資料來源：Serenity Research · 僅供研究參考，不構成投資建議 · 更新：2026 年
+</div>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.04 });
+document.querySelectorAll('.section, .summary-section').forEach(el => obs.observe(el));
+const tabs = document.querySelectorAll('.nav-tab');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
